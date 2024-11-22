@@ -17,8 +17,6 @@ public static class ChordFinder
     public static string GetChordName(List<NoteWithOctave> notes)
     {
         // just for logging
-        string notesString = "";
-        foreach (var note in notes) if (note != null) notesString += $"{note.ToString()} ";
         string notesUsedForIntervalCalc = "";
 
         List<int> noteNums = new();
@@ -44,7 +42,7 @@ public static class ChordFinder
             intervals += ((noteNums[i] - noteNums[0]).ToString() + " ");
         }
 
-        Debug.Log($"GetChordName Log:\nNotes: {notesString}\nNotes Used For Interval Calc: {notesUsedForIntervalCalc}\nSorted Notes: {sortedNotes}\nIntervals: {intervals}");
+        Debug.Log($"GetChordName Log:\nNotes Used For Interval Calc: {notesUsedForIntervalCalc}\nSorted Notes: {sortedNotes}\nIntervals: {intervals}");
 
         if (IntervalToName.TryGetValue(intervals, out var chordName))
         {
