@@ -14,7 +14,7 @@ public class DisplayPanel : MonoBehaviour
     {
         m_StrumButton.onClick.AddListener(() =>
         {
-            AudioManager.Instance.StrumChord(GuitarManager.Instance.GetAllCurrentNotesWithOctaves());
+            AudioManager.Instance.StrumChord(GuitarManager.Instance.GetAllCurrentNotes());
         });
 
         m_ResetButton.onClick.AddListener(() =>

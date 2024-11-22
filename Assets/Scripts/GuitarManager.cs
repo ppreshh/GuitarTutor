@@ -83,25 +83,7 @@ public class GuitarManager : MonoBehaviour
         }
     }
 
-    public List<string> GetAllCurrentNotes()
-    {
-        List<string> notes = new();
-        for (int i = 1; i <= 6; i++)
-        {
-            if (m_CurrentPosition[i] == -1)
-            {
-                notes.Add(null);
-            }
-            else
-            {
-                notes.Add(GetCurrentNoteForString(i).Note);
-            }
-        }
-
-        return notes;
-    }
-
-    public List<NoteWithOctave> GetAllCurrentNotesWithOctaves()
+    public List<NoteWithOctave> GetAllCurrentNotes()
     {
         List<NoteWithOctave> notes = new();
         for (int i = 1; i <= 6; i++)

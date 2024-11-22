@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public static class ChordFinder
 {
@@ -13,17 +14,29 @@ public static class ChordFinder
         { "4 6 9 ", "Minor7" },
     };
 
-    public static string GetChordName(List<string> notes)
+    public static string GetChordName(List<NoteWithOctave> notes)
     {
-        List<int> noteNums = new();
-        foreach (string note in notes)
-        {
-            if (string.IsNullOrEmpty(note)) continue;
-            if (noteNums.Contains(NoteTables.NoteToInt[note])) continue;
+        // just for logging
+        string notesString = "";
+        foreach (var note in notes) if (note != null) notesString += $"{note.ToString()} ";
+        string notesUsedForIntervalCalc = "";
 
-            noteNums.Add(NoteTables.NoteToInt[note]);
+        List<int> noteNums = new();
+        foreach (var note in notes)
+        {
+            if (note == null) continue;
+            if (noteNums.Contains(NoteTables.NoteToInt[note.Note])) continue;
+
+            noteNums.Add(NoteTables.NoteToInt[note.Note]);
+
+            // just for logging
+            notesUsedForIntervalCalc += $"{note.Note} ";
         }
         noteNums.Sort();
+
+        // just for logging
+        string sortedNotes = "";
+        foreach (var note in noteNums) sortedNotes += $"{NoteTables.IntToNote[note]} ";
 
         string intervals = "";
         for (int i = 1; i < noteNums.Count; i++)
@@ -31,9 +44,11 @@ public static class ChordFinder
             intervals += ((noteNums[i] - noteNums[0]).ToString() + " ");
         }
 
+        Debug.Log($"GetChordName Log:\nNotes: {notesString}\nNotes Used For Interval Calc: {notesUsedForIntervalCalc}\nSorted Notes: {sortedNotes}\nIntervals: {intervals}");
+
         if (IntervalToName.TryGetValue(intervals, out var chordName))
         {
-            return notes[0] + " " + chordName;
+            return NoteTables.IntToNote[noteNums[0]] + " " + chordName;
         }
         else
         {

@@ -29,6 +29,11 @@ public class GuitarButton : MonoBehaviour
         {
             GuitarManager.Instance.UpdateCurrentPosition(m_StringNumber, m_FretNumber, m_IsOn);
         });
+
+        if (m_FretNumber == 0)
+        {
+            UpdateVisuals();
+        }
     }
 
     private void OnDestroy()
@@ -40,21 +45,22 @@ public class GuitarButton : MonoBehaviour
 
     private void GuitarManager_OnCurrentPositionUpdated()
     {
-        bool shouldBeOn = GuitarManager.Instance.CurrentPosition[m_StringNumber] == m_FretNumber;
-        if (shouldBeOn != m_IsOn)
-        {
-            m_IsOn = shouldBeOn;
-            UpdateVisuals();
-        }
+        UpdateVisuals();
     }
 
     private void UpdateVisuals()
     {
-        m_CanvasGroup.DOFade(m_IsOn ? 1f : 0f, 0.2f);
-
-        if (GuitarManager.Instance.CurrentPosition[m_StringNumber] == m_FretNumber)
+        bool shouldBeOn = GuitarManager.Instance.CurrentPosition[m_StringNumber] == m_FretNumber;
+        if (shouldBeOn != m_IsOn)
         {
-            m_Text.text = NoteTables.GetNote(GuitarManager.Instance.Tuning[m_StringNumber], m_FretNumber).ToString();
+            m_IsOn = shouldBeOn;
+
+            m_CanvasGroup.DOFade(m_IsOn ? 1f : 0f, 0.2f);
+
+            if (GuitarManager.Instance.CurrentPosition[m_StringNumber] == m_FretNumber)
+            {
+                m_Text.text = NoteTables.GetNote(GuitarManager.Instance.Tuning[m_StringNumber], m_FretNumber).ToString();
+            }
         }
     }
 
@@ -85,12 +91,6 @@ public class GuitarButton : MonoBehaviour
         else
         {
             m_FretNumber = 0;
-        }
-
-        if (m_FretNumber == 0)
-        {
-            m_IsOn = true;
-            UpdateVisuals();
         }
     }
 }
