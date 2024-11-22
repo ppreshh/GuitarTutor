@@ -24,10 +24,13 @@ public static class ChordFinder
 
     private static readonly Dictionary<string, string> IntervalToName = new()
     {
-        {"37", "Minor" },
-        {"47", "Major" },
-        {"36", "Diminished" },
-        {"48", "Augmented" },
+        { "3 7 ", "Minor" },
+        { "4 7 ", "Major" },
+        { "3 6 ", "Diminished" },
+        { "4 8 ", "Augmented" },
+        { "4 7 9 ", "Major7" },
+        { "4 7 8 ", "Dominant7" },
+        { "4 6 9 ", "Minor7" },
     };
 
     public static string GetChordName(List<string> notes)
@@ -44,7 +47,7 @@ public static class ChordFinder
         string intervals = "";
         for (int i = 1; i < noteNums.Count; i++)
         {
-            intervals += (noteNums[i] - noteNums[0]).ToString();
+            intervals += ((noteNums[i] - noteNums[0]).ToString() + " ");
         }
 
         return notes[0] + " " + IntervalToName[intervals];
