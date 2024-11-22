@@ -46,7 +46,14 @@ public class GuitarManager : MonoBehaviour
     {
         for (int i = 1; i <= 6; i++)
         {
-            m_CurrentPosition[i] = 0;
+            if (m_CapoPosition > 0)
+            {
+                m_CurrentPosition[i] = m_CapoPosition;
+            }
+            else
+            {
+                m_CurrentPosition[i] = 0;
+            }
         }
 
         OnCurrentPositionUpdated?.Invoke();
@@ -56,23 +63,28 @@ public class GuitarManager : MonoBehaviour
     {
         if (isOn)
         {
-            if (fretNumber == 0)
+            if (m_CapoPosition > 0)
             {
-                m_CurrentPosition[stringNumber] = -1;
+                if (fretNumber == m_CapoPosition) m_CurrentPosition[stringNumber] = -1;
+                else m_CurrentPosition[stringNumber] = m_CapoPosition;
             }
             else
             {
-                m_CurrentPosition[stringNumber] = 0;
+                if (fretNumber == 0) m_CurrentPosition[stringNumber] = -1;
+                else m_CurrentPosition[stringNumber] = 0;
             }
+
+            OnCurrentPositionUpdated?.Invoke();
         }
         else
         {
-            m_CurrentPosition[stringNumber] = fretNumber;
+            if (fretNumber >= m_CapoPosition)
+            {
+                m_CurrentPosition[stringNumber] = fretNumber;
+
+                OnCurrentPositionUpdated?.Invoke();
+            }
         }
-
-        OnCurrentPositionUpdated?.Invoke();
-
-        //LogCurrentPosition();
     }
 
     public NoteWithOctave GetCurrentNoteForString(int stringNumber)
@@ -107,8 +119,7 @@ public class GuitarManager : MonoBehaviour
 
     public void UseCapo()
     {
-        m_CapoPosition = 1;
-        OnCapoPositionUpdated?.Invoke();
+        UpdateCapoPosition(1);
     }
 
     public void RemoveCapo()
@@ -121,20 +132,20 @@ public class GuitarManager : MonoBehaviour
     {
         if (fretNumber <= 22 && fretNumber >= 1)
         {
+            int increment = fretNumber - m_CapoPosition;
+
             m_CapoPosition = fretNumber;
             OnCapoPositionUpdated?.Invoke();
+
+            for (int i = 1; i <= 6; i++)
+            {
+                if (m_CurrentPosition[i] != -1)
+                {
+                    m_CurrentPosition[i] += increment;
+                }
+            }
+
+            OnCurrentPositionUpdated?.Invoke();
         }
-    }
-
-    private void LogCurrentPosition()
-    {
-        string formmatedLog = "Current Position:";
-
-        for (int i = 1; i <= 6; i++)
-        {
-            formmatedLog += $"\nString: {i}, Fret: {m_CurrentPosition[i]}";
-        }
-
-        Debug.Log(formmatedLog);
     }
 }

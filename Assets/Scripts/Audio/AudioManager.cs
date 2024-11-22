@@ -45,7 +45,7 @@ public class AudioManager : MonoBehaviour
     {
         if (!m_KremonaAudioLibrary[stringNumber - 1].Entries.ContainsKey(note.ToString()))
         {
-            Debug.Log($"No sample for string {stringNumber}, note {note}");
+            Debug.LogWarning($"No sample for string {stringNumber}, note {note}");
             return;
         }
 
