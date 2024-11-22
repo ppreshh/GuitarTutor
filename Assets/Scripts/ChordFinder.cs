@@ -1,11 +1,7 @@
-using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 public static class ChordFinder
 {
-    // E B E G# B E
-
     private static readonly Dictionary<string, int> NoteToInt = new()
     {
         { "C", 0 },
