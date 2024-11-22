@@ -21,6 +21,7 @@ public class MainCanvas : MonoBehaviour
             }
 
             List<string> notes = new(m_NotesInputField.text.Split(' '));
+
             var chordName = ChordFinder.GetChordName(notes);
 
             m_ChordNameText.text = chordName;
