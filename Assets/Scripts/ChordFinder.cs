@@ -2,22 +2,6 @@ using System.Collections.Generic;
 
 public static class ChordFinder
 {
-    private static readonly Dictionary<string, int> NoteToInt = new()
-    {
-        { "C", 0 },
-        { "C#", 1 },
-        { "D", 2 },
-        { "D#", 3 },
-        { "E", 4 },
-        { "F", 5 },
-        { "F#", 6 },
-        { "G", 7 },
-        { "G#", 8 },
-        { "A", 9 },
-        { "A#", 10 },
-        { "B", 11 },
-    };
-
     private static readonly Dictionary<string, string> IntervalToName = new()
     {
         { "3 7 ", "Minor" },
@@ -34,9 +18,9 @@ public static class ChordFinder
         List<int> noteNums = new();
         foreach (string note in notes)
         {
-            if (noteNums.Contains(NoteToInt[note])) continue;
+            if (noteNums.Contains(NoteTables.NoteToInt[note])) continue;
 
-            noteNums.Add(NoteToInt[note]);
+            noteNums.Add(NoteTables.NoteToInt[note]);
         }
         noteNums.Sort();
 
@@ -46,6 +30,13 @@ public static class ChordFinder
             intervals += ((noteNums[i] - noteNums[0]).ToString() + " ");
         }
 
-        return notes[0] + " " + IntervalToName[intervals];
+        if (IntervalToName.TryGetValue(intervals, out var chordName))
+        {
+            return notes[0] + " " + chordName;
+        }
+        else
+        {
+            return "No Match";
+        }
     }
 }
