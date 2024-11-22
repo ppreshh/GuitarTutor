@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+// THIS IS ALL CHATGPT's DOING -.-
+
 public static class ChordFinder
 {
     // Define the standard notes in an octave
