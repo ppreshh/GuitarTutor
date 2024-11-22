@@ -4213,7 +4213,7 @@ GameObject:
   - component: {fileID: 536722328816125693}
   - component: {fileID: 1776803840948032117}
   m_Layer: 5
-  m_Name: UpButton (1)
+  m_Name: DownButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4235,9 +4235,9 @@ RectTransform:
   - {fileID: 448880379531486934}
   m_Father: {fileID: 2125582003122901387}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 60, y: -187.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &536722328816125693
@@ -5559,13 +5559,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1116684626145622883}
+  - component: {fileID: 4020096475981591187}
+  - component: {fileID: 6934774610046718425}
   m_Layer: 5
-  m_Name: Capo
+  m_Name: CapoPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1116684626145622883
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5584,9 +5586,39 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -145}
+  m_AnchoredPosition: {x: 0, y: 145.91}
   m_SizeDelta: {x: 700, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &4020096475981591187
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5911313651549754103}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &6934774610046718425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5911313651549754103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9722d8d0d03c98d43981f07986449822, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CapoPanelRectTransform: {fileID: 1116684626145622883}
+  m_CapoPanelCanvasGroup: {fileID: 4020096475981591187}
+  m_UpButton: {fileID: 7650719438139423627}
+  m_DownButton: {fileID: 1776803840948032117}
+  m_UseCapoButton: {fileID: 4184363251553652203}
+  m_UseCapoButtonText: {fileID: 1687601597134093076}
 --- !u!1 &5932023354239491125
 GameObject:
   m_ObjectHideFlags: 0
@@ -6527,9 +6559,9 @@ RectTransform:
   - {fileID: 5440857145928926102}
   m_Father: {fileID: 2125582003122901387}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 60, y: -62.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8511867255193639407

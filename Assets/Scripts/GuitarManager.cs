@@ -13,6 +13,7 @@ public class GuitarManager : MonoBehaviour
     }
 
     public event Action OnCurrentPositionUpdated;
+    public event Action OnCapoPositionUpdated;
 
     // Guitar String, NoteWithOctave
     private Dictionary<int, NoteWithOctave> m_Tuning = new()
@@ -37,6 +38,9 @@ public class GuitarManager : MonoBehaviour
         { 6, 0 },
     };
     public Dictionary<int, int> CurrentPosition { get => m_CurrentPosition; }
+
+    private int m_CapoPosition = 0;
+    public int CapoPosition { get => m_CapoPosition; }
 
     public void SetCurrentPositionToAllOpen()
     {
@@ -99,6 +103,27 @@ public class GuitarManager : MonoBehaviour
         }
 
         return notes;
+    }
+
+    public void UseCapo()
+    {
+        m_CapoPosition = 1;
+        OnCapoPositionUpdated?.Invoke();
+    }
+
+    public void RemoveCapo()
+    {
+        m_CapoPosition = 0;
+        OnCapoPositionUpdated?.Invoke();
+    }
+
+    public void UpdateCapoPosition(int fretNumber)
+    {
+        if (fretNumber <= 22 && fretNumber >= 1)
+        {
+            m_CapoPosition = fretNumber;
+            OnCapoPositionUpdated?.Invoke();
+        }
     }
 
     private void LogCurrentPosition()
