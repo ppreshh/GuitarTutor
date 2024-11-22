@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class GuitarManager : MonoBehaviour
@@ -37,6 +38,16 @@ public class GuitarManager : MonoBehaviour
     };
     public Dictionary<int, int> CurrentPosition { get => m_CurrentPosition; }
 
+    public void SetCurrentPositionToAllOpen()
+    {
+        for (int i = 1; i <= 6; i++)
+        {
+            m_CurrentPosition[i] = 0;
+        }
+
+        OnCurrentPositionUpdated?.Invoke();
+    }
+
     public void UpdateCurrentPosition(int stringNumber, int fretNumber, bool isOn)
     {
         if (isOn)
@@ -62,7 +73,14 @@ public class GuitarManager : MonoBehaviour
 
     public NoteWithOctave GetCurrentNoteForString(int stringNumber)
     {
-        return NoteTables.GetNote(m_Tuning[stringNumber], m_CurrentPosition[stringNumber]);
+        if (m_CurrentPosition[stringNumber] == -1)
+        {
+            return null;
+        }
+        else
+        {
+            return NoteTables.GetNote(m_Tuning[stringNumber], m_CurrentPosition[stringNumber]);
+        }
     }
 
     public List<string> GetAllCurrentNotes()
@@ -70,7 +88,32 @@ public class GuitarManager : MonoBehaviour
         List<string> notes = new();
         for (int i = 1; i <= 6; i++)
         {
-            notes.Add(GetCurrentNoteForString(i).Note);
+            if (m_CurrentPosition[i] == -1)
+            {
+                notes.Add(null);
+            }
+            else
+            {
+                notes.Add(GetCurrentNoteForString(i).Note);
+            }
+        }
+
+        return notes;
+    }
+
+    public List<NoteWithOctave> GetAllCurrentNotesWithOctaves()
+    {
+        List<NoteWithOctave> notes = new();
+        for (int i = 1; i <= 6; i++)
+        {
+            if (m_CurrentPosition[i] == -1)
+            {
+                notes.Add(null);
+            }
+            else
+            {
+                notes.Add(GetCurrentNoteForString(i));
+            }
         }
 
         return notes;

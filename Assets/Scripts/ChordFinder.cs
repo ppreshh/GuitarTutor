@@ -18,6 +18,7 @@ public static class ChordFinder
         List<int> noteNums = new();
         foreach (string note in notes)
         {
+            if (string.IsNullOrEmpty(note)) continue;
             if (noteNums.Contains(NoteTables.NoteToInt[note])) continue;
 
             noteNums.Add(NoteTables.NoteToInt[note]);
