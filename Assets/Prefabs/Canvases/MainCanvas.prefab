@@ -10015,6 +10015,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5990334990469712636}
     m_Modifications:
+    - target: {fileID: 7092819034732167450, guid: 2ed3223d0633caa45b1036ec8d3d9553, type: 3}
+      propertyPath: m_StringNumber
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 7775149435731011737, guid: 2ed3223d0633caa45b1036ec8d3d9553, type: 3}
       propertyPath: m_Name
       value: PegButton_Flipped (2)
@@ -11049,6 +11053,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5990334990469712636}
     m_Modifications:
+    - target: {fileID: 7092819034732167450, guid: 2ed3223d0633caa45b1036ec8d3d9553, type: 3}
+      propertyPath: m_StringNumber
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7775149435731011737, guid: 2ed3223d0633caa45b1036ec8d3d9553, type: 3}
       propertyPath: m_Name
       value: PegButton_Flipped (1)
@@ -11151,6 +11159,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5990334990469712636}
     m_Modifications:
+    - target: {fileID: 7092819034732167450, guid: 2ed3223d0633caa45b1036ec8d3d9553, type: 3}
+      propertyPath: m_StringNumber
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7775149435731011737, guid: 2ed3223d0633caa45b1036ec8d3d9553, type: 3}
       propertyPath: m_Name
       value: PegButton_Flipped
@@ -11332,6 +11344,10 @@ PrefabInstance:
     - target: {fileID: 2521002959447528088, guid: 438c4903df66fd34d9116973f049c572, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3815579453832474868, guid: 438c4903df66fd34d9116973f049c572, type: 3}
+      propertyPath: m_StringNumber
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4430285491945003383, guid: 438c4903df66fd34d9116973f049c572, type: 3}
       propertyPath: m_Name
@@ -12468,6 +12484,10 @@ PrefabInstance:
     - target: {fileID: 2521002959447528088, guid: 438c4903df66fd34d9116973f049c572, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3815579453832474868, guid: 438c4903df66fd34d9116973f049c572, type: 3}
+      propertyPath: m_StringNumber
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4430285491945003383, guid: 438c4903df66fd34d9116973f049c572, type: 3}
       propertyPath: m_Name

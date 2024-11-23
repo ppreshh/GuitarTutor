@@ -197,6 +197,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2521002959447528088}
   - component: {fileID: 8463889533670022173}
+  - component: {fileID: 3815579453832474868}
   m_Layer: 5
   m_Name: PegButton
   m_TagString: Untagged
@@ -270,6 +271,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3815579453832474868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4430285491945003383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 307bb2b61785ec34fac91a7969e30d20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringNumber: 1
+  m_Button: {fileID: 8463889533670022173}
+  m_Text: {fileID: 1782519769153608702}
 --- !u!1 &5623159153944268906
 GameObject:
   m_ObjectHideFlags: 0

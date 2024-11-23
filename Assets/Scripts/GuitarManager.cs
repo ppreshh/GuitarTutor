@@ -14,6 +14,7 @@ public class GuitarManager : MonoBehaviour
 
     public event Action OnCurrentPositionUpdated;
     public event Action OnCapoPositionUpdated;
+    public event Action OnTuningUpdated;
 
     // Guitar String, NoteWithOctave
     private Dictionary<int, NoteWithOctave> m_Tuning = new()
@@ -146,6 +147,17 @@ public class GuitarManager : MonoBehaviour
             }
 
             OnCurrentPositionUpdated?.Invoke();
+        }
+    }
+
+    public void UpdateTuning(int stringNumber, NoteWithOctave note)
+    {
+        if (!m_Tuning[stringNumber].Equals(note))
+        {
+            m_Tuning[stringNumber] = note;
+
+            OnCurrentPositionUpdated?.Invoke();
+            OnTuningUpdated?.Invoke();
         }
     }
 }

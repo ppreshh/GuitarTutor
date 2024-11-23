@@ -56,11 +56,11 @@ public class GuitarButton : MonoBehaviour
             m_IsOn = shouldBeOn;
 
             m_CanvasGroup.DOFade(m_IsOn ? 1f : 0f, 0.2f);
+        }
 
-            if (GuitarManager.Instance.CurrentPosition[m_StringNumber] == m_FretNumber)
-            {
-                m_Text.text = NoteTables.GetNote(GuitarManager.Instance.Tuning[m_StringNumber], m_FretNumber).ToString();
-            }
+        if (GuitarManager.Instance.CurrentPosition[m_StringNumber] == m_FretNumber)
+        {
+            m_Text.text = NoteTables.GetNote(GuitarManager.Instance.Tuning[m_StringNumber], m_FretNumber).ToString();
         }
     }
 
