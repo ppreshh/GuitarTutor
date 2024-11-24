@@ -7,7 +7,7 @@ public class ProgressionsPanel : SlideInPanel
     [SerializeField] private ProgressionsListPanel m_ProgressionsListPanel;
     [SerializeField] private Button m_AddProgressionButton;
 
-    private void Awake()
+    protected override void Initialize()
     {
         m_AddProgressionButton.onClick.AddListener(() =>
         {
@@ -17,6 +17,13 @@ public class ProgressionsPanel : SlideInPanel
                 m_ProgressionsListPanel.RefreshUI();
             });
         });
+
+        base.Initialize();
+    }
+
+    private void OnDestroy()
+    {
+        m_AddProgressionButton.onClick.RemoveAllListeners();
     }
 
     protected override void SetupUIBeforeSlideIn()
