@@ -32,7 +32,11 @@ public class MainCanvas : MonoBehaviour
         m_SettingsPanel.OnSlideOutCompleted += SettingsPanel_OnSlideOutCompleted;
         m_ProgressionsPanel.OnSlideOutCompleted += ProgressionsPanel_OnSlideOutCompleted;
     }
-    
+
+    private void Update()
+    {
+        m_AddPositionToProgressionButton.interactable = ProgressionsManager.Instance.CurrentSelectedProgressionIndex != -1;
+    }
 
     private void OnDestroy()
     {

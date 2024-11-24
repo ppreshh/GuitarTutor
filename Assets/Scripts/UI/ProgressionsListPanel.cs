@@ -5,34 +5,68 @@ using UnityEngine;
 public class ProgressionsListPanel : Panel
 {
     [Header("Progressions List Panel")]
-    [SerializeField] private ProgressionsListButton m_ProgressionsListButtonPrefab;
+    [SerializeField] private ProgressionsListItem m_ProgressionsListItemPrefab;
     [SerializeField] private Transform m_ProgressionsListParentTransform;
 
-    private List<ProgressionsListButton> m_ProgressionsListButtons = new();
+    private List<ProgressionsListItem> m_ProgressionsListItems = new();
 
-    public event Action<int> OnProgressionsListButtonClicked;
+    private void Start()
+    {
+        ProgressionsManager.Instance.OnCurrentSelectedProgressionIndexChanged += ProgressionsManager_OnCurrentSelectedProgressionIndexChanged;
+    }
+
+    private void OnDestroy()
+    {
+        ProgressionsManager.Instance.OnCurrentSelectedProgressionIndexChanged -= ProgressionsManager_OnCurrentSelectedProgressionIndexChanged;
+    }
+
+    private void ProgressionsManager_OnCurrentSelectedProgressionIndexChanged(int index)
+    {
+        RefreshUI();
+
+        //foreach (var item in  m_ProgressionsListItems)
+        //{
+        //    if (item.Index == index) continue;
+
+        //    item.SelectButton.SetIsOnWithoutNotify(false);
+        //}
+    }
 
     public void RefreshUI()
     {
-        ClearUI();
+        ClearItems();
 
         for (int i = 0; i < ProgressionsManager.Instance.Progressions.Count; i++)
         {
-            var button = Instantiate(m_ProgressionsListButtonPrefab, m_ProgressionsListParentTransform);
-            button.Setup(ProgressionsManager.Instance.Progressions[i].Name, i);
+            var item = Instantiate(m_ProgressionsListItemPrefab, m_ProgressionsListParentTransform);
+            item.Setup(ProgressionsManager.Instance.Progressions[i].Name, i);
 
-            m_ProgressionsListButtons.Add(button);
+            item.OnSelectedButtonClicked += ProgressionsListButton_OnSelectButtonClicked;
+
+            m_ProgressionsListItems.Add(item);
+        }
+
+        if (m_ProgressionsListItems.Count > 0 && ProgressionsManager.Instance.CurrentSelectedProgressionIndex != -1)
+        {
+            m_ProgressionsListItems[ProgressionsManager.Instance.CurrentSelectedProgressionIndex].SelectButton.SetIsOnWithoutNotify(true);
         }
 
         Show(0f);
     }
 
-    private void ClearUI()
+    private void ProgressionsListButton_OnSelectButtonClicked(object sender, ProgressionsListItem.SelectButtonClickedEventArgs e)
     {
-        foreach (var button in m_ProgressionsListButtons)
+        ProgressionsManager.Instance.CurrentSelectedProgressionIndex = e.IsSelecting ? e.Index : -1;
+    }
+
+    private void ClearItems()
+    {
+        foreach (var item in m_ProgressionsListItems)
         {
-            Destroy(button.gameObject);
+            item.OnSelectedButtonClicked -= ProgressionsListButton_OnSelectButtonClicked;
+
+            Destroy(item.gameObject);
         }
-        m_ProgressionsListButtons.Clear();
+        m_ProgressionsListItems.Clear();
     }
 }
