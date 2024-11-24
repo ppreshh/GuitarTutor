@@ -13,13 +13,13 @@ public class UIManager : MonoBehaviour
         Instance = this;
     }
 
-    public void ShowMessage(string message, string buttonText, Action onButtonClicked = null)
+    public void ShowMessage(string message, string buttonText, bool showCancelButton = false, Action onButtonClicked = null)
     {
-        m_MessagePanel.Show(message, buttonText, onButtonClicked);
+        m_MessagePanel.Show(message, buttonText, showCancelButton, onButtonClicked);
     }
 
-    public void GetUserInput(string message, string buttonText, Action<string> onButtonClicked = null)
+    public void GetUserInput(string message, string buttonText, bool showCancelButton = true, Action<string> onButtonClicked = null)
     {
-        m_InputFieldPanel.Show(message, buttonText, onButtonClicked);
+        m_InputFieldPanel.Show(message, buttonText, showCancelButton, onButtonClicked);
     }
 }

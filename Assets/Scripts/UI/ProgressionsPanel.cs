@@ -11,7 +11,7 @@ public class ProgressionsPanel : SlideInPanel
     {
         m_AddProgressionButton.onClick.AddListener(() =>
         {
-            UIManager.Instance.GetUserInput("New Progression Name:", "Create", (string name) =>
+            UIManager.Instance.GetUserInput("New Progression Name:", "Create", true, (string name) =>
             {
                 ProgressionsManager.Instance.CreateProgression(name);
                 m_ProgressionsListPanel.RefreshUI();

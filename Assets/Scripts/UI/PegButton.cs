@@ -13,7 +13,7 @@ public class PegButton : MonoBehaviour
     {
         m_Button.onClick.AddListener(() =>
         {
-            UIManager.Instance.GetUserInput($"Set tuning for string {m_StringNumber}:", "Set", (string value) =>
+            UIManager.Instance.GetUserInput($"Set tuning for string {m_StringNumber}:", "Set", true, (string value) =>
             {
                 if (NoteWithOctave.TryParse(value, out var note))
                 {
