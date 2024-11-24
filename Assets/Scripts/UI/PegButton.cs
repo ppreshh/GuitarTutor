@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,10 +9,18 @@ public class PegButton : MonoBehaviour
     [SerializeField] private Button m_Button;
     [SerializeField] private TextMeshProUGUI m_Text;
 
+    public event EventHandler<ClickedEventArgs> OnClicked;
+    public class ClickedEventArgs : EventArgs
+    {
+        public int StringNumber;
+    }
+
     private void Awake()
     {
         m_Button.onClick.AddListener(() =>
         {
+            OnClicked?.Invoke(this, new ClickedEventArgs { StringNumber = m_StringNumber });
+
             UIManager.Instance.ShowInputFieldPopup($"Set tuning for string {m_StringNumber}:", "Set", (string value) =>
             {
                 if (NoteWithOctave.TryParse(value, out var note))
