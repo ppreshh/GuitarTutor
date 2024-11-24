@@ -17,9 +17,9 @@ public class SlideInPanel : Panel
 
     private float m_OriginalLocalPosX;
 
-    private bool m_IsVisible = false;
+    private bool m_IsSlidIn = false;
 
-    private void Awake()
+    protected override void Initialize()
     {
         var width = Screen.width;
         float posX = m_Side == Side.Left ? -1f * width : width;
@@ -30,22 +30,24 @@ public class SlideInPanel : Panel
 
         m_OriginalLocalPosX = m_RectTransform.localPosition.x;
 
-        m_BackButton.onClick.AddListener(() => { Hide(); });
+        m_BackButton.onClick.AddListener(() => { SlideOut(); });
+
+        base.Initialize();
     }
 
-    public void Show()
+    public void SlideIn()
     {
-        if (m_IsVisible) return;
+        if (m_IsSlidIn) return;
 
         m_RectTransform.DOLocalMoveX(0f, 0.2f).SetEase(Ease.InOutSine);
-        m_IsVisible = true;
+        m_IsSlidIn = true;
     }
 
-    public void Hide()
+    public void SlideOut()
     {
-        if (!m_IsVisible) return;
+        if (!m_IsSlidIn) return;
 
         m_RectTransform.DOLocalMoveX(m_OriginalLocalPosX, 0.2f).SetEase(Ease.InOutSine);
-        m_IsVisible = false;
+        m_IsSlidIn = false;
     }
 }

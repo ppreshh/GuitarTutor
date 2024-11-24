@@ -20,14 +20,6 @@ public class PegButton : MonoBehaviour
         m_Button.onClick.AddListener(() =>
         {
             OnClicked?.Invoke(this, new ClickedEventArgs { StringNumber = m_StringNumber });
-
-            UIManager.Instance.ShowInputFieldPopup($"Set tuning for string {m_StringNumber}:", "Set", (string value) =>
-            {
-                if (NoteWithOctave.TryParse(value, out var note))
-                {
-                    GuitarManager.Instance.UpdateTuning(m_StringNumber, note);
-                }
-            });
         });
     }
 
