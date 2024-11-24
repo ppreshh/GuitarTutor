@@ -35,13 +35,13 @@ public class AudioManager : MonoBehaviour
         {
             if (notes[i] == null) continue;
 
-            PlaySample(i + 1, notes[i]);
+            PlayNote(i + 1, notes[i]);
 
             yield return new WaitForSeconds(0.05f);
         }
     }
 
-    private void PlaySample(int stringNumber, NoteWithOctave note)
+    public void PlayNote(int stringNumber, NoteWithOctave note)
     {
         if (!m_KremonaAudioLibrary[stringNumber - 1].Entries.ContainsKey(note.ToString()))
         {

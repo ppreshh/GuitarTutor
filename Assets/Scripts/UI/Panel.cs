@@ -27,6 +27,7 @@ public class Panel : MonoBehaviour
     public void SetInteractable(bool interactable)
     {
         m_CanvasGroup.interactable = interactable;
+        m_CanvasGroup.blocksRaycasts = interactable;
     }
 
     public void Show(float fadeTime = 0.1f)

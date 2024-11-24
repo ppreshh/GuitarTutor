@@ -39,6 +39,11 @@ public abstract class SlideInPanel : Panel
         base.Initialize();
     }
 
+    private void OnDestroy()
+    {
+        m_BackButton.onClick.RemoveAllListeners();
+    }
+
     public void SlideIn()
     {
         if (m_IsSlidIn) return;
