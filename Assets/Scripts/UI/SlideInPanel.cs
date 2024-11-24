@@ -1,13 +1,16 @@
 using DG.Tweening;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SlideInPanel : Panel
+public abstract class SlideInPanel : Panel
 {
     [Header("Slide In Panel")]
     [SerializeField] private Side m_Side;
     [SerializeField] private RectTransform m_RectTransform;
     [SerializeField] private Button m_BackButton;
+
+    protected abstract void SetupUIBeforeSlideIn();
 
     private enum Side
     {
@@ -16,8 +19,9 @@ public class SlideInPanel : Panel
     }
 
     private float m_OriginalLocalPosX;
-
     private bool m_IsSlidIn = false;
+
+    public event Action OnSlideOutCompleted;
 
     protected override void Initialize()
     {
@@ -39,6 +43,8 @@ public class SlideInPanel : Panel
     {
         if (m_IsSlidIn) return;
 
+        SetupUIBeforeSlideIn();
+
         m_RectTransform.DOLocalMoveX(0f, 0.2f).SetEase(Ease.InOutSine);
         m_IsSlidIn = true;
     }
@@ -47,7 +53,7 @@ public class SlideInPanel : Panel
     {
         if (!m_IsSlidIn) return;
 
-        m_RectTransform.DOLocalMoveX(m_OriginalLocalPosX, 0.2f).SetEase(Ease.InOutSine);
+        m_RectTransform.DOLocalMoveX(m_OriginalLocalPosX, 0.2f).SetEase(Ease.InOutSine).OnComplete(() => OnSlideOutCompleted?.Invoke());
         m_IsSlidIn = false;
     }
 }

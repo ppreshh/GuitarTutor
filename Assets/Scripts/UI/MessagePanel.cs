@@ -3,19 +3,18 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InputFieldPanel : Panel
+public class MessagePanel : Panel
 {
-    [Header("Input Field Panel")]
+    [Header("Message Panel")]
     [SerializeField] private TextMeshProUGUI m_MessageText;
-    [SerializeField] private TMP_InputField m_InputField;
     [SerializeField] private Button m_SubmitButton;
     [SerializeField] private TextMeshProUGUI m_SubmitButtonText;
 
-    private Action<string> m_OnSubmitButtonClicked = null;
+    private Action m_OnSubmitButtonClicked = null;
 
     protected override void Initialize()
     {
-        m_SubmitButton.onClick.AddListener(() => { m_OnSubmitButtonClicked?.Invoke(m_InputField.text); Hide(); });
+        m_SubmitButton.onClick.AddListener(() => { m_OnSubmitButtonClicked?.Invoke(); Hide(); });
 
         base.Initialize();
     }
@@ -25,7 +24,7 @@ public class InputFieldPanel : Panel
         m_SubmitButton.onClick.RemoveAllListeners();
     }
 
-    public void Show(string message, string submitButtonText, Action<string> onSubmitButtonClicked)
+    public void Show(string message, string submitButtonText, Action onSubmitButtonClicked = null)
     {
         m_MessageText.text = message;
         m_SubmitButtonText.text = submitButtonText;

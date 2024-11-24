@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,46 +8,49 @@ public class MainCanvas : MonoBehaviour
     [SerializeField] private MainPanel m_MainPanel;
     [SerializeField] private SettingsPanel m_SettingsPanel;
     [SerializeField] private ProgressionsPanel m_ProgressionsPanel;
-    [SerializeField] private InputFieldPanel m_InputFieldPanel;
-    [SerializeField] private List<PegButton> m_PegButtons;
+    [SerializeField] private Button m_AddPositionToProgressionButton;
 
     private void Awake()
     {
         m_SettingsButton.onClick.AddListener(() =>
         {
             m_SettingsPanel.SlideIn();
+            m_MainPanel.SetInteractable(false);
         });
 
         m_ProgressionsButton.onClick.AddListener(() =>
         {
             m_ProgressionsPanel.SlideIn();
+            m_MainPanel.SetInteractable(false);
         });
 
-        foreach (var button in m_PegButtons)
+        m_AddPositionToProgressionButton.onClick.AddListener(() =>
         {
-            button.OnClicked += PegButton_OnClicked;
-        }
+            ProgressionsManager.Instance.AddCurrentGuitarPosition();
+        });
+
+        m_SettingsPanel.OnSlideOutCompleted += SettingsPanel_OnSlideOutCompleted;
+        m_ProgressionsPanel.OnSlideOutCompleted += ProgressionsPanel_OnSlideOutCompleted;
     }
+    
 
     private void OnDestroy()
     {
         m_SettingsButton.onClick.RemoveAllListeners();
         m_ProgressionsButton.onClick.RemoveAllListeners();
+        m_AddPositionToProgressionButton.onClick.RemoveAllListeners();
 
-        foreach (var button in m_PegButtons)
-        {
-            button.OnClicked -= PegButton_OnClicked;
-        }
+        m_SettingsPanel.OnSlideOutCompleted -= SettingsPanel_OnSlideOutCompleted;
+        m_ProgressionsPanel.OnSlideOutCompleted -= ProgressionsPanel_OnSlideOutCompleted;
     }
 
-    private void PegButton_OnClicked(object sender, PegButton.ClickedEventArgs e)
+    private void SettingsPanel_OnSlideOutCompleted()
     {
-        m_InputFieldPanel.Show($"Set tuning for string {e.StringNumber}:", "Set", (string value) =>
-        {
-            if (NoteWithOctave.TryParse(value, out var note))
-            {
-                GuitarManager.Instance.UpdateTuning(e.StringNumber, note);
-            }
-        });
+        m_MainPanel.SetInteractable(true);
+    }
+
+    private void ProgressionsPanel_OnSlideOutCompleted()
+    {
+        m_MainPanel.SetInteractable(true);
     }
 }

@@ -9,22 +9,19 @@ public class PegButton : MonoBehaviour
     [SerializeField] private Button m_Button;
     [SerializeField] private TextMeshProUGUI m_Text;
 
-    public event EventHandler<ClickedEventArgs> OnClicked;
-    public class ClickedEventArgs : EventArgs
-    {
-        public int StringNumber;
-    }
-
-    private void Awake()
+    private void Start()
     {
         m_Button.onClick.AddListener(() =>
         {
-            OnClicked?.Invoke(this, new ClickedEventArgs { StringNumber = m_StringNumber });
+            UIManager.Instance.GetUserInput($"Set tuning for string {m_StringNumber}:", "Set", (string value) =>
+            {
+                if (NoteWithOctave.TryParse(value, out var note))
+                {
+                    GuitarManager.Instance.UpdateTuning(m_StringNumber, note);
+                }
+            });
         });
-    }
 
-    private void Start()
-    {
         GuitarManager.Instance.OnTuningUpdated += GuitarManager_OnTuningUpdated;
 
         UpdateVisuals();

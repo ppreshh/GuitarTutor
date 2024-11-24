@@ -1,6 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
+[RequireComponent(typeof(CanvasGroup))]
 public class Panel : MonoBehaviour
 {
     [Header("Panel")]
@@ -28,11 +29,11 @@ public class Panel : MonoBehaviour
         m_CanvasGroup.interactable = interactable;
     }
 
-    public void Show()
+    public void Show(float fadeTime = 0.1f)
     {
         if (m_IsVisible) return;
 
-        m_CanvasGroup.DOFade(1f, 0.1f);
+        m_CanvasGroup.DOFade(1f, fadeTime);
         m_CanvasGroup.interactable = true;
         m_CanvasGroup.blocksRaycasts = true;
 
