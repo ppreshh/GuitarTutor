@@ -1,3 +1,4 @@
+using Palmmedia.ReportGenerator.Core;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,15 +16,7 @@ public class GuitarManager : MonoBehaviour
     public event Action OnCapoPositionUpdated;
     public event Action OnTuningUpdated;
 
-    private Tuning m_Tuning = new(new() 
-    {
-        { 1, new("E", 2) },
-        { 2, new("A", 2) },
-        { 3, new("D", 3) },
-        { 4, new("G", 3) },
-        { 5, new("B", 3) },
-        { 6, new("E", 4) },
-    });
+    private Tuning m_Tuning = Tuning.Default();
     public Tuning Tuning { get => m_Tuning; }
 
     // Guitar String, Fret
@@ -167,5 +160,15 @@ public class GuitarManager : MonoBehaviour
             OnCurrentPositionUpdated?.Invoke();
             OnTuningUpdated?.Invoke();
         }
+    }
+
+    public bool CurrentPositionIsAllOpen()
+    {
+        foreach (var position in m_CurrentPosition)
+        {
+            if (position.Value != m_CapoPosition) return false;
+        }
+
+        return true;
     }
 }

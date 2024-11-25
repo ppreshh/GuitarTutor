@@ -39,4 +39,17 @@ public class Tuning : IEquatable<Tuning>
 
         return tuning[..^1];
     }
+
+    public static Tuning Default()
+    {
+        return new(new()
+        {
+            { 1, new("E", 2) },
+            { 2, new("A", 2) },
+            { 3, new("D", 3) },
+            { 4, new("G", 3) },
+            { 5, new("B", 3) },
+            { 6, new("E", 4) },
+        });
+    }
 }

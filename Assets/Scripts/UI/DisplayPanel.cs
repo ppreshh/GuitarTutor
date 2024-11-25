@@ -19,7 +19,24 @@ public class DisplayPanel : MonoBehaviour
 
         m_ResetButton.onClick.AddListener(() =>
         {
-            GuitarManager.Instance.SetCurrentPositionToAllOpen();
+            if (!GuitarManager.Instance.CurrentPositionIsAllOpen())
+            {
+                GuitarManager.Instance.SetCurrentPositionToAllOpen();
+                return;
+            }
+            
+            if (GuitarManager.Instance.CapoPosition > 0)
+            {
+                GuitarManager.Instance.RemoveCapo();
+                GuitarManager.Instance.SetCurrentPositionToAllOpen();
+                return;
+            }
+
+            if (!GuitarManager.Instance.Tuning.Equals(Tuning.Default()))
+            {
+                GuitarManager.Instance.SetTuning(Tuning.Default());
+                return;
+            }
         });
 
         GuitarManager.Instance.OnCurrentPositionUpdated += GuitarManager_OnCurrentPositionUpdated;
