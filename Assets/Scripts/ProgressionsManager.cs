@@ -1,9 +1,13 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class ProgressionsManager : MonoBehaviour
 {
+    private const string k_ProgressionsFileName = "Progressions.txt";
+
     private List<Progression> m_Progressions = new();
     public List<Progression> Progressions { get =>  m_Progressions; }
 
@@ -19,6 +23,7 @@ public class ProgressionsManager : MonoBehaviour
     }
 
     public event Action<int> OnCurrentSelectedProgressionIndexChanged;
+    public event Action OnInitialized;
 
     public static ProgressionsManager Instance;
 
@@ -27,35 +32,69 @@ public class ProgressionsManager : MonoBehaviour
         Instance = this;
     }
 
+    private void Start()
+    {
+        LoadProgressions();
+
+        OnInitialized?.Invoke();
+    }
+
     public void AddCurrentGuitarPosition()
     {
         if (m_CurrentSelectedProgressionIndex == -1) return;
 
         var tuning = GuitarManager.Instance.Tuning;
+        var capoPosition = GuitarManager.Instance.CapoPosition;
         var position = GuitarManager.Instance.CurrentPosition;
 
-        if (m_Progressions[m_CurrentSelectedProgressionIndex].Tuning == tuning)
-        {
-            if (!m_Progressions[m_CurrentSelectedProgressionIndex].Positions.Contains(position))
-            {
-                m_Progressions[m_CurrentSelectedProgressionIndex].Positions.Add(position);
-
-                UIManager.Instance.ShowNotification($"Added to '{m_Progressions[m_CurrentSelectedProgressionIndex].Name}'");
-            }
-            else
-            {
-                UIManager.Instance.ShowMessage("This position has already been added to the current progression.", "Continue");
-            }
-        }
-        else
+        if (m_Progressions[m_CurrentSelectedProgressionIndex].Tuning != tuning)
         {
             UIManager.Instance.ShowMessage("The current tuning doesn't match the tuning of the current progression.", "Continue");
+            return;
         }
+
+        if (m_Progressions[m_CurrentSelectedProgressionIndex].CapoPosition != capoPosition)
+        {
+            UIManager.Instance.ShowMessage("This position has already been added to the current progression.", "Continue");
+            return;
+        }
+
+        if (m_Progressions[m_CurrentSelectedProgressionIndex].Positions.Contains(position))
+        {
+            UIManager.Instance.ShowMessage("This position has already been added to the current progression.", "Continue");
+            return;
+        }
+
+        m_Progressions[m_CurrentSelectedProgressionIndex].Positions.Add(position);
+
+        UIManager.Instance.ShowNotification($"Added to '{m_Progressions[m_CurrentSelectedProgressionIndex].Name}'");
+
+        SaveProgressions();
     }
 
     public void CreateProgression(string name)
     {
-        m_Progressions.Add(new(name, GuitarManager.Instance.Tuning));
+        m_Progressions.Add(new(name, GuitarManager.Instance.Tuning, GuitarManager.Instance.CapoPosition));
         CurrentSelectedProgressionIndex = m_Progressions.Count - 1;
+
+        SaveProgressions();
+    }
+
+    private void SaveProgressions()
+    {
+        var progressions = JsonConvert.SerializeObject(m_Progressions);
+
+        string filePath = Path.Combine(Application.persistentDataPath, k_ProgressionsFileName);
+        File.WriteAllText(filePath, progressions);
+    }
+
+    private void LoadProgressions()
+    {
+        string filePath = Path.Combine(Application.persistentDataPath, k_ProgressionsFileName);
+        if (File.Exists(filePath))
+        {
+            string data = File.ReadAllText(filePath);
+            m_Progressions = JsonConvert.DeserializeObject<List<Progression>>(data);
+        }
     }
 }

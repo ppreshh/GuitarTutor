@@ -23,13 +23,6 @@ public class ProgressionsListPanel : Panel
     private void ProgressionsManager_OnCurrentSelectedProgressionIndexChanged(int index)
     {
         RefreshUI();
-
-        //foreach (var item in  m_ProgressionsListItems)
-        //{
-        //    if (item.Index == index) continue;
-
-        //    item.SelectButton.SetIsOnWithoutNotify(false);
-        //}
     }
 
     public void RefreshUI()

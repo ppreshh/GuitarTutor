@@ -159,4 +159,18 @@ public class GuitarManager : MonoBehaviour
             OnTuningUpdated?.Invoke();
         }
     }
+
+    public string GetTuningFormatted()
+    {
+        string tuning = "";
+
+        for (int i = 1; i <= 6; i++)
+        {
+            tuning += m_Tuning[i].Note.ToString() + " ";
+        }
+
+        tuning = tuning.Substring(0, tuning.Length - 1);
+
+        return tuning;
+    }
 }

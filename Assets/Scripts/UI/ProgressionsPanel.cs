@@ -11,7 +11,7 @@ public class ProgressionsPanel : SlideInPanel
     {
         m_AddProgressionButton.onClick.AddListener(() =>
         {
-            UIManager.Instance.GetUserInput("New Progression Name:", "Create", true, (string name) =>
+            UIManager.Instance.GetUserInput($"Tuning: {GuitarManager.Instance.GetTuningFormatted()}\nCapo Position: {GuitarManager.Instance.CapoPosition}\nNew Progression Name:", "Create", true, (string name) =>
             {
                 ProgressionsManager.Instance.CreateProgression(name);
             });
