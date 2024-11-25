@@ -41,7 +41,14 @@ public class ProgressionsManager : MonoBehaviour
         }
     }
 
-    public Progression CurrentProgression { get => m_Progressions[m_CurrentSelectedProgressionIndex]; }
+    public Progression CurrentProgression
+    {
+        get
+        {
+            if (m_CurrentSelectedProgressionIndex < 0) return null;
+            return m_Progressions[m_CurrentSelectedProgressionIndex];
+        }
+    }
 
     public event Action<int> OnCurrentSelectedProgressionIndexChanged;
     public event Action OnInitialized;

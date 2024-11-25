@@ -20,23 +20,65 @@ public class CapoPanel : MonoBehaviour
 
         m_UpButton.onClick.AddListener(() =>
         {
-            GuitarManager.Instance.UpdateCapoPosition(GuitarManager.Instance.CapoPosition - 1);
+            if (ProgressionsManager.Instance.CurrentProgression == null)
+            {
+                GuitarManager.Instance.UpdateCapoPosition(GuitarManager.Instance.CapoPosition - 1);
+            }
+            else
+            {
+                UIManager.Instance.ShowMessage(
+                    $"Can't move capo while a progression is selected. Deselect current progression <b>{ProgressionsManager.Instance.CurrentProgression.Name}</b>?",
+                    "Yes",
+                    true,
+                    () =>
+                    {
+                        ProgressionsManager.Instance.CurrentSelectedProgressionIndex = -1;
+                    });
+            }
         });
 
         m_DownButton.onClick.AddListener(() =>
         {
-            GuitarManager.Instance.UpdateCapoPosition(GuitarManager.Instance.CapoPosition + 1);
+            if (ProgressionsManager.Instance.CurrentProgression == null)
+            {
+                GuitarManager.Instance.UpdateCapoPosition(GuitarManager.Instance.CapoPosition + 1);
+            }
+            else
+            {
+                UIManager.Instance.ShowMessage(
+                    $"Can't move capo while a progression is selected. Deselect current progression <b>{ProgressionsManager.Instance.CurrentProgression.Name}</b>?",
+                    "Yes",
+                    true,
+                    () =>
+                    {
+                        ProgressionsManager.Instance.CurrentSelectedProgressionIndex = -1;
+                    });
+            }
         });
 
         m_UseCapoButton.onClick.AddListener(() =>
         {
-            if (GuitarManager.Instance.CapoPosition > 0)
+            if (ProgressionsManager.Instance.CurrentProgression == null)
             {
-                GuitarManager.Instance.RemoveCapo();
+                if (GuitarManager.Instance.CapoPosition > 0)
+                {
+                    GuitarManager.Instance.RemoveCapo();
+                }
+                else
+                {
+                    GuitarManager.Instance.UseCapo();
+                }
             }
             else
             {
-                GuitarManager.Instance.UseCapo();
+                UIManager.Instance.ShowMessage(
+                    $"Can't move capo while a progression is selected. Deselect current progression <b>{ProgressionsManager.Instance.CurrentProgression.Name}</b>?",
+                    "Yes",
+                    true,
+                    () =>
+                    {
+                        ProgressionsManager.Instance.CurrentSelectedProgressionIndex = -1;
+                    });
             }
         });
     }

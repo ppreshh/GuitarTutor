@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,13 +12,27 @@ public class PegButton : MonoBehaviour
     {
         m_Button.onClick.AddListener(() =>
         {
-            UIManager.Instance.GetUserInput($"Set tuning for string {m_StringNumber}:", "Set", true, (string value) =>
+            if (ProgressionsManager.Instance.CurrentProgression == null)
             {
-                if (NoteWithOctave.TryParse(value, out var note))
+                UIManager.Instance.GetUserInput($"Set tuning for string {m_StringNumber}:", "Set", true, (string value) =>
                 {
-                    GuitarManager.Instance.UpdateTuning(m_StringNumber, note);
-                }
-            });
+                    if (NoteWithOctave.TryParse(value, out var note))
+                    {
+                        GuitarManager.Instance.UpdateTuning(m_StringNumber, note);
+                    }
+                });
+            }
+            else
+            {
+                UIManager.Instance.ShowMessage(
+                    $"Can't tune while a progression is selected. Deselect current progression <b>{ProgressionsManager.Instance.CurrentProgression.Name}</b>?",
+                    "Yes",
+                    true,
+                    () =>
+                    {
+                        ProgressionsManager.Instance.CurrentSelectedProgressionIndex = -1;
+                    });
+            }
         });
 
         GuitarManager.Instance.OnTuningUpdated += GuitarManager_OnTuningUpdated;
