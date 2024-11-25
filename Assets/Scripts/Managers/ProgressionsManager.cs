@@ -66,7 +66,7 @@ public class ProgressionsManager : MonoBehaviour
         var capoPosition = GuitarManager.Instance.CapoPosition;
         var position = GuitarManager.Instance.CurrentPosition;
 
-        if (m_Progressions[m_CurrentSelectedProgressionIndex].Tuning != tuning)
+        if (!m_Progressions[m_CurrentSelectedProgressionIndex].Tuning.Equals(tuning))
         {
             UIManager.Instance.ShowMessage("The current tuning doesn't match the current progression.", "Continue");
             return;
@@ -78,7 +78,7 @@ public class ProgressionsManager : MonoBehaviour
             return;
         }
 
-        if (m_Progressions[m_CurrentSelectedProgressionIndex].Positions.Contains(position))
+        if (m_Progressions[m_CurrentSelectedProgressionIndex].ContainsPosition(position))
         {
             UIManager.Instance.ShowMessage("This position has already been added to the current progression.", "Continue");
             return;

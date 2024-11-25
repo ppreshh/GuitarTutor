@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
+[Serializable]
 public class Tuning : IEquatable<Tuning>
 {
     // Guitar String Number, NoteWithOctave
@@ -13,12 +15,7 @@ public class Tuning : IEquatable<Tuning>
 
     public bool Equals(Tuning other)
     {
-        for (int i = 1; i <= 6; i++)
-        {
-            if (!Settings[i].Equals(other.Settings[i])) return false;
-        }
-
-        return true;
+        return Settings.SequenceEqual(other.Settings);
     }
 
     public override string ToString()
