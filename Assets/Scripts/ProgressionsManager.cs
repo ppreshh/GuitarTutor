@@ -18,9 +18,28 @@ public class ProgressionsManager : MonoBehaviour
         set
         {
             m_CurrentSelectedProgressionIndex = value;
+
+            if (m_CurrentSelectedProgressionIndex >= 0)
+            {
+                GuitarManager.Instance.SetTuning(CurrentProgression.Tuning);
+
+                if (GuitarManager.Instance.CapoPosition > 0 && CurrentProgression.CapoPosition == 0)
+                {
+                    GuitarManager.Instance.RemoveCapo();
+                }
+                else
+                {
+                    GuitarManager.Instance.UpdateCapoPosition(CurrentProgression.CapoPosition);
+                }
+
+                GuitarManager.Instance.SetCurrentPositionToAllOpen();
+            }
+
             OnCurrentSelectedProgressionIndexChanged?.Invoke(m_CurrentSelectedProgressionIndex);
         }
     }
+
+    public Progression CurrentProgression { get => m_Progressions[m_CurrentSelectedProgressionIndex]; }
 
     public event Action<int> OnCurrentSelectedProgressionIndexChanged;
     public event Action OnInitialized;

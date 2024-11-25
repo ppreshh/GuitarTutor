@@ -149,6 +149,17 @@ public class GuitarManager : MonoBehaviour
         }
     }
 
+    public void SetTuning(Dictionary<int, NoteWithOctave> tuning)
+    {
+        for (int i = 1; i <= 6; i++)
+        {
+            if (!m_Tuning[i].Note.Equals(tuning[i]))
+            {
+                UpdateTuning(i, tuning[i]);
+            }
+        }
+    }
+
     public void UpdateTuning(int stringNumber, NoteWithOctave note)
     {
         if (!m_Tuning[stringNumber].Equals(note))
@@ -160,17 +171,15 @@ public class GuitarManager : MonoBehaviour
         }
     }
 
-    public string GetTuningFormatted()
+    public string GetFormattedTuning()
     {
         string tuning = "";
 
         for (int i = 1; i <= 6; i++)
         {
-            tuning += m_Tuning[i].Note.ToString() + " ";
+            tuning += m_Tuning[i].Note + " ";
         }
 
-        tuning = tuning.Substring(0, tuning.Length - 1);
-
-        return tuning;
+        return tuning[..^1];
     }
 }

@@ -12,6 +12,8 @@ public class CapoPanel : MonoBehaviour
     [SerializeField] private Button m_UseCapoButton;
     [SerializeField] private TextMeshProUGUI m_UseCapoButtonText;
 
+    private bool m_IsVisible = false;
+
     private void Start()
     {
         GuitarManager.Instance.OnCapoPositionUpdated += GuitarManager_OnCapoPositionUpdated;
@@ -31,16 +33,10 @@ public class CapoPanel : MonoBehaviour
             if (GuitarManager.Instance.CapoPosition > 0)
             {
                 GuitarManager.Instance.RemoveCapo();
-                m_UseCapoButtonText.text = "Use Capo";
-                m_CapoPanelCanvasGroup.interactable = false;
-                m_CapoPanelCanvasGroup.DOFade(0f, 0.1f);
             }
             else
             {
                 GuitarManager.Instance.UseCapo();
-                m_UseCapoButtonText.text = "Remove Capo";
-                m_CapoPanelCanvasGroup.interactable = true;
-                m_CapoPanelCanvasGroup.DOFade(1f, 0.1f);
             }
         });
     }
@@ -56,6 +52,30 @@ public class CapoPanel : MonoBehaviour
 
     private void GuitarManager_OnCapoPositionUpdated()
     {
+        UpdateVisuals();
+    }
+
+    private void UpdateVisuals()
+    {
+        bool isUsingCapo = GuitarManager.Instance.CapoPosition > 0;
+
+        m_UseCapoButtonText.text = isUsingCapo ? "Remove Capo" : "Use Capo";
+        m_CapoPanelCanvasGroup.interactable = isUsingCapo;
+
+        if (m_IsVisible != isUsingCapo)
+        {
+            if (m_IsVisible)
+            {
+                m_CapoPanelCanvasGroup.DOFade(0f, 0.1f);
+                m_IsVisible = false;
+            }
+            else
+            {
+                m_CapoPanelCanvasGroup.DOFade(1f, 0.1f);
+                m_IsVisible = true;
+            }
+        }
+
         m_CapoPanelRectTransform.DOLocalMoveY(-145f - ((GuitarManager.Instance.CapoPosition - 1) * 290.91f), 0.2f);
     }
 }
