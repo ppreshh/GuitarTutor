@@ -47,7 +47,6 @@ public abstract class SlideInPanel : Panel
 
         // Calculate the initial off-screen position based on side
         float posX = m_Side == Side.Left ? -1f * screenWidthInCanvasUnits : screenWidthInCanvasUnits;
-        Debug.Log(m_Side + " POS X: " + posX);
 
         // Save the original position of the panel
         var localPos = m_RectTransform.localPosition;
