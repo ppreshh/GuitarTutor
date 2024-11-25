@@ -4,11 +4,11 @@ using System.Collections.Generic;
 public class Progression
 {
     public string Name;
-    public Dictionary<int, NoteWithOctave> Tuning;
+    public Tuning Tuning;
     public int CapoPosition;
     public List<Dictionary<int, int>> Positions = new();
 
-    public Progression(string name, Dictionary<int, NoteWithOctave> tuning, int capoPosition)
+    public Progression(string name, Tuning tuning, int capoPosition)
     {
         Name = name;
         Tuning = tuning;

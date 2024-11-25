@@ -15,8 +15,7 @@ public class GuitarManager : MonoBehaviour
     public event Action OnCapoPositionUpdated;
     public event Action OnTuningUpdated;
 
-    // Guitar String, NoteWithOctave
-    private Dictionary<int, NoteWithOctave> m_Tuning = new()
+    private Tuning m_Tuning = new(new() 
     {
         { 1, new("E", 2) },
         { 2, new("A", 2) },
@@ -24,8 +23,8 @@ public class GuitarManager : MonoBehaviour
         { 4, new("G", 3) },
         { 5, new("B", 3) },
         { 6, new("E", 4) },
-    };
-    public Dictionary<int, NoteWithOctave> Tuning { get => m_Tuning; }
+    });
+    public Tuning Tuning { get => m_Tuning; }
 
     // Guitar String, Fret
     private Dictionary<int, int> m_CurrentPosition = new()
@@ -95,7 +94,7 @@ public class GuitarManager : MonoBehaviour
         }
         else
         {
-            return NoteTables.GetNote(m_Tuning[stringNumber], m_CurrentPosition[stringNumber]);
+            return NoteTables.GetNote(m_Tuning.Settings[stringNumber], m_CurrentPosition[stringNumber]);
         }
     }
 
@@ -149,37 +148,24 @@ public class GuitarManager : MonoBehaviour
         }
     }
 
-    public void SetTuning(Dictionary<int, NoteWithOctave> tuning)
+    public void SetTuning(Tuning tuning)
     {
-        for (int i = 1; i <= 6; i++)
-        {
-            if (!m_Tuning[i].Note.Equals(tuning[i]))
-            {
-                UpdateTuning(i, tuning[i]);
-            }
-        }
+        if (m_Tuning.Equals(tuning)) return;
+
+        m_Tuning = tuning;
+
+        OnCurrentPositionUpdated?.Invoke();
+        OnTuningUpdated?.Invoke();
     }
 
     public void UpdateTuning(int stringNumber, NoteWithOctave note)
     {
-        if (!m_Tuning[stringNumber].Equals(note))
+        if (!m_Tuning.Settings[stringNumber].Equals(note))
         {
-            m_Tuning[stringNumber] = note;
+            m_Tuning.Settings[stringNumber] = note;
 
             OnCurrentPositionUpdated?.Invoke();
             OnTuningUpdated?.Invoke();
         }
-    }
-
-    public string GetFormattedTuning()
-    {
-        string tuning = "";
-
-        for (int i = 1; i <= 6; i++)
-        {
-            tuning += m_Tuning[i].Note + " ";
-        }
-
-        return tuning[..^1];
     }
 }

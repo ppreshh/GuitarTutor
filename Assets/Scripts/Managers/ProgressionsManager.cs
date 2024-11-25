@@ -68,13 +68,13 @@ public class ProgressionsManager : MonoBehaviour
 
         if (m_Progressions[m_CurrentSelectedProgressionIndex].Tuning != tuning)
         {
-            UIManager.Instance.ShowMessage("The current tuning doesn't match the tuning of the current progression.", "Continue");
+            UIManager.Instance.ShowMessage("The current tuning doesn't match the current progression.", "Continue");
             return;
         }
 
         if (m_Progressions[m_CurrentSelectedProgressionIndex].CapoPosition != capoPosition)
         {
-            UIManager.Instance.ShowMessage("This position has already been added to the current progression.", "Continue");
+            UIManager.Instance.ShowMessage("The current capo position doesn't match the current progression.", "Continue");
             return;
         }
 

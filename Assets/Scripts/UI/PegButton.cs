@@ -41,6 +41,6 @@ public class PegButton : MonoBehaviour
 
     private void UpdateVisuals()
     {
-        m_Text.text = GuitarManager.Instance.Tuning[m_StringNumber].ToString();
+        m_Text.text = GuitarManager.Instance.Tuning.Settings[m_StringNumber].ToString();
     }
 }

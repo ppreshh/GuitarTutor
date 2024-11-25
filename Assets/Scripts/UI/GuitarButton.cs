@@ -60,7 +60,7 @@ public class GuitarButton : MonoBehaviour
 
         if (GuitarManager.Instance.CurrentPosition[m_StringNumber] == m_FretNumber)
         {
-            m_Text.text = NoteTables.GetNote(GuitarManager.Instance.Tuning[m_StringNumber], m_FretNumber).ToString();
+            m_Text.text = NoteTables.GetNote(GuitarManager.Instance.Tuning.Settings[m_StringNumber], m_FretNumber).ToString();
         }
     }
 
