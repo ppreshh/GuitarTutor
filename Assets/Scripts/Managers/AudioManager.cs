@@ -16,7 +16,7 @@ public class AudioManager : MonoBehaviour
         Instance = this;
     }
 
-    public void StrumChord(List<NoteWithOctave> notes)
+    public void StrumChord(List<NoteWithOctave?> notes)
     {
         if (m_StrumChordCoroutine != null)
         {
@@ -29,13 +29,13 @@ public class AudioManager : MonoBehaviour
         m_StrumChordCoroutine = StartCoroutine(StrumChordCoroutine(notes));
     }
 
-    private IEnumerator StrumChordCoroutine(List<NoteWithOctave> notes)
+    private IEnumerator StrumChordCoroutine(List<NoteWithOctave?> notes)
     {
         for (int i = 0; i < notes.Count; i++)
         {
             if (notes[i] == null) continue;
 
-            PlayNote(i + 1, notes[i]);
+            PlayNote(i + 1, notes[i].Value);
 
             yield return new WaitForSeconds(0.05f);
         }

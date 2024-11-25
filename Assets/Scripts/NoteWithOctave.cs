@@ -1,7 +1,7 @@
 using System;
 using System.Text.RegularExpressions;
 
-public class NoteWithOctave : IEquatable<NoteWithOctave>
+public struct NoteWithOctave : IEquatable<NoteWithOctave>
 {
     public string Note { get; set; }
     public int Octave { get; set; }
@@ -24,7 +24,7 @@ public class NoteWithOctave : IEquatable<NoteWithOctave>
 
     public static bool TryParse(string value, out NoteWithOctave note)
     {
-        note = null;
+        note = default;
         if (string.IsNullOrEmpty(value)) return false;
 
         // Define a regex pattern to match notes with optional sharp (#) and octave

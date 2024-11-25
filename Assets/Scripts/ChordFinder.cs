@@ -14,7 +14,7 @@ public static class ChordFinder
         { "4 6 9 ", "Minor7" },
     };
 
-    public static string GetChordName(List<NoteWithOctave> notes)
+    public static string GetChordName(List<NoteWithOctave?> notes)
     {
         // just for logging
         string notesUsedForIntervalCalc = "";
@@ -23,12 +23,12 @@ public static class ChordFinder
         foreach (var note in notes)
         {
             if (note == null) continue;
-            if (noteNums.Contains(NoteTables.NoteToInt[note.Note])) continue;
+            if (noteNums.Contains(NoteTables.NoteToInt[note.Value.Note])) continue;
 
-            noteNums.Add(NoteTables.NoteToInt[note.Note]);
+            noteNums.Add(NoteTables.NoteToInt[note.Value.Note]);
 
             // just for logging
-            notesUsedForIntervalCalc += $"{note.Note} ";
+            notesUsedForIntervalCalc += $"{note.Value.Note} ";
         }
         noteNums.Sort();
 

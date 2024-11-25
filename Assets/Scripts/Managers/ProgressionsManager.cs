@@ -17,6 +17,8 @@ public class ProgressionsManager : MonoBehaviour
         get => m_CurrentSelectedProgressionIndex; 
         set
         {
+            if (m_CurrentSelectedProgressionIndex == value) return;
+
             m_CurrentSelectedProgressionIndex = value;
 
             if (m_CurrentSelectedProgressionIndex >= 0)
@@ -84,7 +86,7 @@ public class ProgressionsManager : MonoBehaviour
             return;
         }
 
-        CurrentProgression.Positions.Add(position);
+        CurrentProgression.Positions.Add(new(position));
 
         UIManager.Instance.ShowNotification($"Added to '{CurrentProgression.Name}'");
 

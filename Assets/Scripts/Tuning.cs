@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 [Serializable]
 public class Tuning : IEquatable<Tuning>
@@ -17,12 +16,16 @@ public class Tuning : IEquatable<Tuning>
     {
         for (int i = 1; i <= 6; i++)
         {
-            if (Settings[i] != other.Settings[i]) return false;
+            if (!Settings[i].Equals(other.Settings[i])) return false;
         }
 
         return true;
+    }
 
-        //return Settings.SequenceEqual(other.Settings);
+    public Tuning Copy()
+    {
+        Tuning tuning = new(new(Settings));
+        return tuning;
     }
 
     public override string ToString()

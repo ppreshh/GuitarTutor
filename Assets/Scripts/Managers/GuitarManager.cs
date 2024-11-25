@@ -86,7 +86,7 @@ public class GuitarManager : MonoBehaviour
         }
     }
 
-    public NoteWithOctave GetCurrentNoteForString(int stringNumber)
+    public NoteWithOctave? GetCurrentNoteForString(int stringNumber)
     {
         if (m_CurrentPosition[stringNumber] == -1)
         {
@@ -98,9 +98,9 @@ public class GuitarManager : MonoBehaviour
         }
     }
 
-    public List<NoteWithOctave> GetAllCurrentNotes()
+    public List<NoteWithOctave?> GetAllCurrentNotes()
     {
-        List<NoteWithOctave> notes = new();
+        List<NoteWithOctave?> notes = new();
         for (int i = 1; i <= 6; i++)
         {
             if (m_CurrentPosition[i] == -1)
@@ -109,7 +109,7 @@ public class GuitarManager : MonoBehaviour
             }
             else
             {
-                notes.Add(GetCurrentNoteForString(i));
+                notes.Add(GetCurrentNoteForString(i).Value);
             }
         }
 
@@ -152,7 +152,7 @@ public class GuitarManager : MonoBehaviour
     {
         if (m_Tuning.Equals(tuning)) return;
 
-        m_Tuning = tuning;
+        m_Tuning = tuning.Copy();
 
         OnCurrentPositionUpdated?.Invoke();
         OnTuningUpdated?.Invoke();
