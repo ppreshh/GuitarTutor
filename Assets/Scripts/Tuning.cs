@@ -15,7 +15,14 @@ public class Tuning : IEquatable<Tuning>
 
     public bool Equals(Tuning other)
     {
-        return Settings.SequenceEqual(other.Settings);
+        for (int i = 1; i <= 6; i++)
+        {
+            if (Settings[i] != other.Settings[i]) return false;
+        }
+
+        return true;
+
+        //return Settings.SequenceEqual(other.Settings);
     }
 
     public override string ToString()
