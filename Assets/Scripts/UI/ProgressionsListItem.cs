@@ -21,14 +21,20 @@ public class ProgressionsListItem : MonoBehaviour
         public int Index;
     }
 
+    public event Action<int> OnEditButtonClicked;
+
     private void Awake()
     {
         m_SelectButton.OnValueChanged += SelectButton_OnValueChanged;
+
+        m_EditButton.onClick.AddListener(() => OnEditButtonClicked?.Invoke(m_Index));
     }
 
     private void OnDestroy()
     {
         m_SelectButton.OnValueChanged -= SelectButton_OnValueChanged;
+
+        m_EditButton.onClick.RemoveAllListeners();
     }
 
     private void SelectButton_OnValueChanged(bool isOn)

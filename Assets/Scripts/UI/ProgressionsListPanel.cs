@@ -10,6 +10,8 @@ public class ProgressionsListPanel : Panel
 
     private List<ProgressionsListItem> m_ProgressionsListItems = new();
 
+    public event Action<int> OnProgressionItemEditButtonClicked;
+
     private void Start()
     {
         ProgressionsManager.Instance.OnCurrentSelectedProgressionIndexChanged += ProgressionsManager_OnCurrentSelectedProgressionIndexChanged;
@@ -36,7 +38,8 @@ public class ProgressionsListPanel : Panel
             var item = Instantiate(m_ProgressionsListItemPrefab, m_ProgressionsListParentTransform);
             item.Setup(ProgressionsManager.Instance.Progressions[i].Name, i);
 
-            item.OnSelectedButtonClicked += ProgressionsListButton_OnSelectButtonClicked;
+            item.OnSelectedButtonClicked += ProgressionsListItem_OnSelectButtonClicked;
+            item.OnEditButtonClicked += ProgressionsListItem_OnEditButtonClicked;
 
             m_ProgressionsListItems.Add(item);
         }
@@ -49,7 +52,12 @@ public class ProgressionsListPanel : Panel
         Show(0f);
     }
 
-    private void ProgressionsListButton_OnSelectButtonClicked(object sender, ProgressionsListItem.SelectButtonClickedEventArgs e)
+    private void ProgressionsListItem_OnEditButtonClicked(int index)
+    {
+        OnProgressionItemEditButtonClicked?.Invoke(index);
+    }
+
+    private void ProgressionsListItem_OnSelectButtonClicked(object sender, ProgressionsListItem.SelectButtonClickedEventArgs e)
     {
         ProgressionsManager.Instance.CurrentSelectedProgressionIndex = e.IsSelecting ? e.Index : -1;
     }
@@ -58,7 +66,8 @@ public class ProgressionsListPanel : Panel
     {
         foreach (var item in m_ProgressionsListItems)
         {
-            item.OnSelectedButtonClicked -= ProgressionsListButton_OnSelectButtonClicked;
+            item.OnSelectedButtonClicked -= ProgressionsListItem_OnSelectButtonClicked;
+            item.OnEditButtonClicked -= ProgressionsListItem_OnEditButtonClicked;
 
             Destroy(item.gameObject);
         }
