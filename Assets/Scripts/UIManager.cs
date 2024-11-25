@@ -12,6 +12,8 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+        Application.targetFrameRate = 60;
     }
 
     public void ShowMessage(string message, string buttonText, bool showCancelButton = false, Action onButtonClicked = null)
