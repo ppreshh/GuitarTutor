@@ -20,9 +20,11 @@ public class ProgressionsPanel : SlideInPanel
         base.Initialize();
     }
 
-    private void OnDestroy()
+    protected override void CleanUp()
     {
         m_AddProgressionButton.onClick.RemoveAllListeners();
+
+        base.CleanUp();
     }
 
     protected override void SetupUIBeforeSlideIn()

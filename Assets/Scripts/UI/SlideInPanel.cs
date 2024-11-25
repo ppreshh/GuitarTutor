@@ -25,18 +25,36 @@ public abstract class SlideInPanel : Panel
 
     protected override void Initialize()
     {
-        var width = Screen.width;
-        float posX = m_Side == Side.Left ? -1f * width : width;
-        var localPos = m_RectTransform.localPosition;
-
-        m_RectTransform.sizeDelta = new(width, m_RectTransform.sizeDelta.y);
-        m_RectTransform.localPosition = new(posX, localPos.y, localPos.z);
-
-        m_OriginalLocalPosX = m_RectTransform.localPosition.x;
-
         m_BackButton.onClick.AddListener(() => { SlideOut(); });
 
         base.Initialize();
+    }
+
+    private void Start()
+    {
+        var canvas = m_RectTransform.GetComponentInParent<Canvas>();
+        if (canvas == null)
+        {
+            Debug.LogError("Canvas not found");
+            return;
+        }
+
+        // Get the scale factor from the Canvas Scaler
+        float canvasScaleFactor = canvas.scaleFactor;
+
+        // Get the screen width in world space
+        float screenWidthInCanvasUnits = Screen.width / canvasScaleFactor;
+
+        // Calculate the initial off-screen position based on side
+        float posX = m_Side == Side.Left ? -1f * screenWidthInCanvasUnits : screenWidthInCanvasUnits;
+        Debug.Log(m_Side + " POS X: " + posX);
+
+        // Save the original position of the panel
+        var localPos = m_RectTransform.localPosition;
+        m_RectTransform.sizeDelta = new Vector2(screenWidthInCanvasUnits, m_RectTransform.sizeDelta.y);
+        m_RectTransform.localPosition = new Vector3(posX, localPos.y, localPos.z);
+
+        m_OriginalLocalPosX = m_RectTransform.localPosition.x;
     }
 
     protected override void CleanUp()
