@@ -19,9 +19,19 @@ public class Panel : MonoBehaviour
         if (!m_StartVisible) Hide(0f);
     }
 
+    /// <summary>
+    /// Runs on OnDestroy()
+    /// </summary>
+    protected virtual void CleanUp() { }
+
     private void Awake()
     {
         Initialize();
+    }
+
+    private void OnDestroy()
+    {
+        CleanUp();
     }
 
     public void SetInteractable(bool interactable)

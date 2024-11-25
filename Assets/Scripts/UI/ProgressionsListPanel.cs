@@ -15,9 +15,11 @@ public class ProgressionsListPanel : Panel
         ProgressionsManager.Instance.OnCurrentSelectedProgressionIndexChanged += ProgressionsManager_OnCurrentSelectedProgressionIndexChanged;
     }
 
-    private void OnDestroy()
+    protected override void CleanUp()
     {
         ProgressionsManager.Instance.OnCurrentSelectedProgressionIndexChanged -= ProgressionsManager_OnCurrentSelectedProgressionIndexChanged;
+
+        base.CleanUp();
     }
 
     private void ProgressionsManager_OnCurrentSelectedProgressionIndexChanged(int index)

@@ -22,10 +22,12 @@ public class MessagePanel : Panel
         base.Initialize();
     }
 
-    private void OnDestroy()
+    protected override void CleanUp()
     {
         m_SubmitButton.onClick.RemoveAllListeners();
         m_CancelButton.onClick.RemoveAllListeners();
+
+        base.CleanUp();
     }
 
     public void Show(string message, string submitButtonText, bool showCancelButton = false, Action onSubmitButtonClicked = null)

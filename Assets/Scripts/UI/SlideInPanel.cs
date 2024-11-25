@@ -39,9 +39,11 @@ public abstract class SlideInPanel : Panel
         base.Initialize();
     }
 
-    private void OnDestroy()
+    protected override void CleanUp()
     {
         m_BackButton.onClick.RemoveAllListeners();
+
+        base.CleanUp();
     }
 
     public void SlideIn()

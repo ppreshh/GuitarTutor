@@ -23,10 +23,12 @@ public class InputFieldPanel : Panel
         base.Initialize();
     }
 
-    private void OnDestroy()
+    protected override void CleanUp()
     {
         m_SubmitButton.onClick.RemoveAllListeners();
         m_CancelButton.onClick.RemoveAllListeners();
+
+        base.CleanUp();
     }
 
     public void Show(string message, string submitButtonText, bool showCancelButton = true, Action<string> onSubmitButtonClicked = null)
