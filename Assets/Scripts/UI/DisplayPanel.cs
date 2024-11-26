@@ -22,6 +22,7 @@ public class DisplayPanel : MonoBehaviour
             if (!GuitarManager.Instance.CurrentPositionIsAllOpen())
             {
                 GuitarManager.Instance.SetCurrentPositionToAllOpen();
+                UIManager.Instance.ShowNotification("Position Reset");
                 return;
             }
 
@@ -42,12 +43,14 @@ public class DisplayPanel : MonoBehaviour
             {
                 GuitarManager.Instance.RemoveCapo();
                 GuitarManager.Instance.SetCurrentPositionToAllOpen();
+                UIManager.Instance.ShowNotification("Capo and Position Reset");
                 return;
             }
 
             if (!GuitarManager.Instance.Tuning.Equals(Tuning.Default()))
             {
                 GuitarManager.Instance.SetTuning(Tuning.Default());
+                UIManager.Instance.ShowNotification("Tuning Reset");
                 return;
             }
         });
