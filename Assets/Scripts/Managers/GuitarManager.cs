@@ -80,32 +80,12 @@ public class GuitarManager : MonoBehaviour
 
     public NoteWithOctave? GetCurrentNoteForString(int stringNumber)
     {
-        if (m_CurrentPosition[stringNumber] == -1)
-        {
-            return null;
-        }
-        else
-        {
-            return NoteTables.GetNote(m_Tuning.Settings[stringNumber], m_CurrentPosition[stringNumber]);
-        }
+        return NoteTools.GetNoteForString(m_Tuning, m_CurrentPosition, stringNumber);
     }
 
     public List<NoteWithOctave?> GetAllCurrentNotes()
     {
-        List<NoteWithOctave?> notes = new();
-        for (int i = 1; i <= 6; i++)
-        {
-            if (m_CurrentPosition[i] == -1)
-            {
-                notes.Add(null);
-            }
-            else
-            {
-                notes.Add(GetCurrentNoteForString(i).Value);
-            }
-        }
-
-        return notes;
+        return NoteTools.GetNotesFromPosition(m_Tuning, m_CurrentPosition);
     }
 
     public void UseCapo()

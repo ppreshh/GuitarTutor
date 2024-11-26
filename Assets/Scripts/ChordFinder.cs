@@ -23,9 +23,9 @@ public static class ChordFinder
         foreach (var note in notes)
         {
             if (note == null) continue;
-            if (noteNums.Contains(NoteTables.NoteToInt[note.Value.Note])) continue;
+            if (noteNums.Contains(NoteTools.NoteToInt[note.Value.Note])) continue;
 
-            noteNums.Add(NoteTables.NoteToInt[note.Value.Note]);
+            noteNums.Add(NoteTools.NoteToInt[note.Value.Note]);
 
             // just for logging
             notesUsedForIntervalCalc += $"{note.Value.Note} ";
@@ -34,7 +34,7 @@ public static class ChordFinder
 
         // just for logging
         string sortedNotes = "";
-        foreach (var note in noteNums) sortedNotes += $"{NoteTables.IntToNote[note]} ";
+        foreach (var note in noteNums) sortedNotes += $"{NoteTools.IntToNote[note]} ";
 
         string intervals = "";
         for (int i = 1; i < noteNums.Count; i++)
@@ -46,7 +46,7 @@ public static class ChordFinder
 
         if (IntervalToName.TryGetValue(intervals, out var chordName))
         {
-            return NoteTables.IntToNote[noteNums[0]] + " " + chordName;
+            return NoteTools.IntToNote[noteNums[0]] + " " + chordName;
         }
         else
         {
