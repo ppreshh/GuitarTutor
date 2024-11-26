@@ -40,6 +40,7 @@ public class ProgressionsListPanel : Panel
 
             item.OnSelectedButtonClicked += ProgressionsListItem_OnSelectButtonClicked;
             item.OnEditButtonClicked += ProgressionsListItem_OnEditButtonClicked;
+            item.OnDeleteButtonClicked += ProgressionListItem_OnDeleteButtonClicked;
 
             m_ProgressionsListItems.Add(item);
         }
@@ -50,6 +51,15 @@ public class ProgressionsListPanel : Panel
         }
 
         Show(0f);
+    }
+
+    private void ProgressionListItem_OnDeleteButtonClicked(int index)
+    {
+        UIManager.Instance.ShowMessage($"Are you sure you want to delete progression <b>{ProgressionsManager.Instance.Progressions[index].Name}</b>?", "Yes", true, () =>
+        {
+            ProgressionsManager.Instance.DeleteProgression(index);
+            RefreshUI();
+        });
     }
 
     private void ProgressionsListItem_OnEditButtonClicked(int index)
@@ -68,6 +78,7 @@ public class ProgressionsListPanel : Panel
         {
             item.OnSelectedButtonClicked -= ProgressionsListItem_OnSelectButtonClicked;
             item.OnEditButtonClicked -= ProgressionsListItem_OnEditButtonClicked;
+            item.OnDeleteButtonClicked -= ProgressionListItem_OnDeleteButtonClicked;
 
             Destroy(item.gameObject);
         }

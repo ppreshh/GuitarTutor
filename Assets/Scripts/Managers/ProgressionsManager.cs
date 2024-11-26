@@ -108,6 +108,22 @@ public class ProgressionsManager : MonoBehaviour
         SaveProgressions();
     }
 
+    public void DeleteProgression(int index)
+    {
+        m_Progressions.RemoveAt(index);
+
+        if (CurrentSelectedProgressionIndex == index || index == 0)
+        {
+            CurrentSelectedProgressionIndex = -1;
+        }
+        else if (CurrentSelectedProgressionIndex > index)
+        {
+            CurrentSelectedProgressionIndex--;
+        }
+
+        SaveProgressions();
+    }
+
     private void SaveProgressions()
     {
         var progressions = JsonConvert.SerializeObject(m_Progressions);

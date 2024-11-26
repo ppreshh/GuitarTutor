@@ -10,6 +10,7 @@ public class ProgressionsListItem : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI m_Text;
     [SerializeField] private Button m_EditButton;
+    [SerializeField] private Button m_DeleteButton;
 
     private int m_Index = -1;
     public int Index { get =>  m_Index; }
@@ -22,12 +23,14 @@ public class ProgressionsListItem : MonoBehaviour
     }
 
     public event Action<int> OnEditButtonClicked;
+    public event Action<int> OnDeleteButtonClicked;
 
     private void Awake()
     {
         m_SelectButton.OnValueChanged += SelectButton_OnValueChanged;
 
         m_EditButton.onClick.AddListener(() => OnEditButtonClicked?.Invoke(m_Index));
+        m_DeleteButton.onClick.AddListener(() => OnDeleteButtonClicked?.Invoke(m_Index));
     }
 
     private void OnDestroy()
@@ -35,6 +38,7 @@ public class ProgressionsListItem : MonoBehaviour
         m_SelectButton.OnValueChanged -= SelectButton_OnValueChanged;
 
         m_EditButton.onClick.RemoveAllListeners();
+        m_DeleteButton.onClick.RemoveAllListeners();
     }
 
     private void SelectButton_OnValueChanged(bool isOn)
