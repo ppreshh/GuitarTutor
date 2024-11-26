@@ -24,6 +24,19 @@ public class DisplayPanel : MonoBehaviour
                 GuitarManager.Instance.SetCurrentPositionToAllOpen();
                 return;
             }
+
+            if (ProgressionsManager.Instance.CurrentProgression != null)
+            {
+                UIManager.Instance.ShowMessage(
+                    $"Can't reset Capo or Tuning while a progression is selected. Would you like to deselect the progression <b>{ProgressionsManager.Instance.CurrentProgression.Name}</b>?", 
+                    "Yes",
+                    true,
+                    () =>
+                    {
+                        ProgressionsManager.Instance.CurrentSelectedProgressionIndex = -1;
+                    });
+                return;
+            }
             
             if (GuitarManager.Instance.CapoPosition > 0)
             {

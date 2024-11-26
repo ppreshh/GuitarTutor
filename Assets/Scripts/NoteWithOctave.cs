@@ -44,4 +44,12 @@ public struct NoteWithOctave : IEquatable<NoteWithOctave>
 
         return false;
     }
+
+    public int ToInt()
+    {
+        int noteNum = NoteTools.NoteToInt[Note];
+        noteNum += (Octave * 12);
+
+        return noteNum;
+    }
 }
