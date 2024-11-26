@@ -15,6 +15,7 @@ public class ProgressionViewPanel : Panel
     [SerializeField] private Transform m_ProgressionViewItemsParent;
 
     private List<ProgressionViewItem> m_ProgressionViewItems = new();
+    private Progression m_Progression = null;
 
     public event Action OnBackButtonClicked;
 
@@ -36,19 +37,32 @@ public class ProgressionViewPanel : Panel
     {
         ClearItems();
 
-        m_NameText.text = progression.Name;
-        m_TuningText.text = "Tuning: " + progression.Tuning.ToString();
-        m_CapoText.text = "Capo Position: " + (progression.CapoPosition == 0 ? " -- " : "Fret " + progression.CapoPosition.ToString());
+        if (m_Progression != null)
+        {
+            m_Progression.OnProgressionUpdated -= Progression_OnProgressionUpdated;
+        }
 
-        for (int i = 0; i < progression.Positions.Count; i++)
+        m_Progression = progression;
+        m_Progression.OnProgressionUpdated += Progression_OnProgressionUpdated;
+
+        m_NameText.text = m_Progression.Name;
+        m_TuningText.text = "Tuning: " + m_Progression.Tuning.ToString();
+        m_CapoText.text = "Capo Position: " + (m_Progression.CapoPosition == 0 ? " -- " : "Fret " + m_Progression.CapoPosition.ToString());
+
+        SetupItems();
+
+        Show(0.1f);
+    }
+
+    private void SetupItems()
+    {
+        for (int i = 0; i < m_Progression.Positions.Count; i++)
         {
             var item = Instantiate(m_ProgressionViewItemPrefab, m_ProgressionViewItemsParent);
-            item.Setup(progression, i);
+            item.Setup(m_Progression, i);
 
             m_ProgressionViewItems.Add(item);
         }
-
-        Show(0.1f);
     }
 
     private void ClearItems()
@@ -58,5 +72,16 @@ public class ProgressionViewPanel : Panel
             Destroy(item.gameObject);
         }
         m_ProgressionViewItems.Clear();
+    }
+
+    private void Progression_OnProgressionUpdated()
+    {
+        RefreshItems();
+    }
+
+    private void RefreshItems()
+    {
+        ClearItems();
+        SetupItems();
     }
 }

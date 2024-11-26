@@ -124,7 +124,7 @@ public class ProgressionsManager : MonoBehaviour
         SaveProgressions();
     }
 
-    private void SaveProgressions()
+    public void SaveProgressions()
     {
         var progressions = JsonConvert.SerializeObject(m_Progressions);
 
@@ -140,5 +140,30 @@ public class ProgressionsManager : MonoBehaviour
             string data = File.ReadAllText(filePath);
             m_Progressions = JsonConvert.DeserializeObject<List<Progression>>(data);
         }
+    }
+
+    public enum ProgressionPositionOp { MoveUp, MoveDown, Duplicate, Delete }
+    public void UpdateProgressionPositions(Progression progression, ProgressionPositionOp op, int index)
+    {
+        bool success = false;
+        switch (op)
+        {
+            case ProgressionPositionOp.MoveUp:
+                if (progression.TryMovePositionUpInProgression(index)) success = true;
+                break;
+            case ProgressionPositionOp.MoveDown:
+                if (progression.TryMovePositionDownInProgression(index)) success = true;
+                break;
+            case ProgressionPositionOp.Duplicate:
+                progression.DuplicatePosition(index);
+                success = true;
+                break;
+            case ProgressionPositionOp.Delete:
+                progression.DeletePosition(index);
+                success = true;
+                break;
+        }
+
+        if (success) SaveProgressions();
     }
 }
