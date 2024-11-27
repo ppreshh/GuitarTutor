@@ -17,29 +17,33 @@ public static class ChordFinder
 
     public static string GetChordName(List<NoteWithOctave?> notes)
     {
-        //List<NoteWithOctave> chordNotes = new();
-        //foreach (NoteWithOctave? note in notes)
-        //{
-        //    if (note.HasValue)
-        //    {
-        //        if (!chordNotes.Contains(note.Value))
-        //        {
-        //            chordNotes.Add(note.Value);
-        //        }
-        //    }
-        //}
+        List<NoteWithOctave> chordNotes = new();
+        foreach (NoteWithOctave? note in notes)
+        {
+            if (note.HasValue)
+            {
+                if (!chordNotes.Contains(note.Value))
+                {
+                    chordNotes.Add(note.Value);
+                }
+            }
+        }
 
-        //NoteWithOctave rootNote = chordNotes[0];
+        NoteWithOctave rootNote = chordNotes[0];
 
-        //List<int> intervals = new();
-        //for (int i = 1; i < chordNotes.Count; i++)
-        //{
-        //    intervals.Add(chordNotes[i].ToInt() - rootNote.ToInt());
-        //}
+        List<int> intervals = new();
+        for (int i = 1; i < chordNotes.Count; i++)
+        {
+            intervals.Add(chordNotes[i].ToInt() - rootNote.ToInt());
+        }
 
-        //intervals.Sort();
+        intervals.Sort();
 
+        string intervalsString = "";
+        foreach (var interval in intervals) intervalsString += (interval.ToString() + " ");
 
+        // old stuff
+        /*
         // just for logging
         string notesUsedForIntervalCalc = "";
 
@@ -90,8 +94,11 @@ public static class ChordFinder
         // just for logging
         string intervalsString = "";
         foreach (var interval in intervals) intervalsString += (interval.ToString() + " ");
+        */
 
-        Debug.Log($"GetChordName Log:\nRoot Note: {NoteTools.IntToNote[roomNoteNum]}\nNotes Used For Interval Calc: {notesUsedForIntervalCalc}\nSorted Notes: {sortedNotes}\nIntervals: {intervalsString}");
+        //Debug.Log($"GetChordName Log:\nRoot Note: {rootNote}\nNotes Used For Interval Calc: {notesUsedForIntervalCalc}\nSorted Notes: {sortedNotes}\nIntervals: {intervalsString}");
+        
+        Debug.Log($"GetChordName Log:\nRoot Note: {rootNote}\nIntervals: {intervalsString}");
 
         var chordName = GetIntervalName(intervals);
         if (string.IsNullOrEmpty(chordName))
@@ -100,7 +107,9 @@ public static class ChordFinder
         }
         else
         {
-            return $"{NoteTools.IntToNote[roomNoteNum]} {chordName}";
+            //return $"{NoteTools.IntToNote[roomNoteNum]} {chordName}";
+
+            return $"{rootNote.Note} {chordName}";
         }
     }
 
