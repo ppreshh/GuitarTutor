@@ -4,122 +4,143 @@ using UnityEngine;
 
 public static class ChordFinder
 {
-    private static readonly Dictionary<List<int>, string> IntervalToName = new()
+    private static readonly Dictionary<List<int>, string> Triads = new()
     {
-        { new(){ 3, 7 }, "Minor" },
-        { new(){ 4, 7 }, "Major" },
-        { new(){ 3, 6 }, "Diminished" },
-        { new(){ 4, 8 }, "Augmented" },
-        { new(){ 4, 7, 9 }, "Major7" },
-        { new(){ 4, 7, 8 }, "Dominant7" },
-        { new(){ 4, 6, 9 }, "Minor7" },
+        { new(){ 0, 2, 7 }, "sus2" },
+        { new(){ 0, 3, 7 }, "minor" },
+        { new(){ 0, 4, 7 }, "major" },
+        { new(){ 0, 5, 7 }, "sus4" },
+        { new(){ 0, 4, 8 }, "aug" },
     };
 
     public static string GetChordName(List<NoteWithOctave?> notes)
     {
+        // Add all played strings to list
         List<NoteWithOctave> chordNotes = new();
         foreach (NoteWithOctave? note in notes)
         {
             if (note.HasValue)
             {
-                if (!chordNotes.Contains(note.Value))
-                {
-                    chordNotes.Add(note.Value);
-                }
+                chordNotes.Add(note.Value);
             }
         }
 
+        // Store root note
         NoteWithOctave rootNote = chordNotes[0];
 
-        List<int> intervals = new();
-        for (int i = 1; i < chordNotes.Count; i++)
+        // Remove duplicates
+        List<NoteWithOctave> intervalNotes = new();
+        foreach (var note in chordNotes)
         {
-            intervals.Add(chordNotes[i].ToInt() - rootNote.ToInt());
-        }
-
-        intervals.Sort();
-
-        string intervalsString = "";
-        foreach (var interval in intervals) intervalsString += (interval.ToString() + " ");
-
-        // old stuff
-        /*
-        // just for logging
-        string notesUsedForIntervalCalc = "";
-
-        int roomNoteNum = 0;
-        foreach (var note in notes)
-        {
-            if (note.HasValue)
+            if (!intervalNotes.Any(obj => obj.Note.Equals(note.Note)))
             {
-                roomNoteNum = NoteTools.NoteToInt[note.Value.Note];
-                break;
+                intervalNotes.Add(note);
             }
         }
 
-        List<int> noteNums = new();
-        foreach (var note in notes)
-        {
-            if (note == null) continue;
-            if (noteNums.Contains(NoteTools.NoteToInt[note.Value.Note])) continue;
-            if (NoteTools.NoteToInt[note.Value.Note] == roomNoteNum) continue;
-
-            noteNums.Add(NoteTools.NoteToInt[note.Value.Note]);
-
-            // just for logging
-            notesUsedForIntervalCalc += $"{note.Value.Note} ";
-        }
-        noteNums.Sort();
-        noteNums.Insert(0, roomNoteNum);
-
-        // just for logging
-        string sortedNotes = "";
-        foreach (var note in noteNums) sortedNotes += $"{NoteTools.IntToNote[note]} ";
-
+        // calculate intervals
         List<int> intervals = new();
-        for (int i = 1; i < noteNums.Count; i++)
+        for (int i = 0; i < intervalNotes.Count; i++)
         {
-            intervals.Add(noteNums[i] - noteNums[0]);
+            int interval = intervalNotes[i].ToInt(false) - rootNote.ToInt(false);
+            while (interval < 0) interval += 12;
+
+            intervals.Add(interval);
         }
-        intervals.Sort();
-        for (int i = 0; i < intervals.Count; i++)
+
+        LogList(chordNotes, "All Notes: ");
+        LogList(intervalNotes, "Remove Duplicates: ");
+        LogList(intervals, "Calculated Intervals: ");
+        Debug.Log(" --------------------- ");
+
+        var name = IntervalsToName(intervals);
+        if (name != null)
         {
-            if (intervals[i] <= 0)
-            {
-                intervals[i] += 12;
-            }
-        }
-        intervals.Sort();
-
-        // just for logging
-        string intervalsString = "";
-        foreach (var interval in intervals) intervalsString += (interval.ToString() + " ");
-        */
-
-        //Debug.Log($"GetChordName Log:\nRoot Note: {rootNote}\nNotes Used For Interval Calc: {notesUsedForIntervalCalc}\nSorted Notes: {sortedNotes}\nIntervals: {intervalsString}");
-        
-        Debug.Log($"GetChordName Log:\nRoot Note: {rootNote}\nIntervals: {intervalsString}");
-
-        var chordName = GetIntervalName(intervals);
-        if (string.IsNullOrEmpty(chordName))
-        {
-            return "No Match";
+            return $"{rootNote.Note}{name}";
         }
         else
         {
-            //return $"{NoteTools.IntToNote[roomNoteNum]} {chordName}";
-
-            return $"{rootNote.Note} {chordName}";
+            return "No Match";
         }
     }
 
-    private static string GetIntervalName(List<int> intervals)
+    private static string IntervalsToName(List<int> intervals)
     {
-        foreach (var kvp in IntervalToName)
+        if (intervals.Count == 0)
         {
-            if (kvp.Key.SequenceEqual(intervals)) return kvp.Value;
+            return "None";
+        }
+
+        if (intervals.Count == 1)
+        {
+            return $"{intervals[0]}";
+        }
+
+        if (intervals.Count == 2)
+        {
+            return "Diad";
+        }
+
+        if (intervals.Count == 3)
+        {
+            return CalcTriad(intervals);
         }
 
         return null;
+    }
+
+    private static string CalcTriad(List<int> intervals)
+    {
+        intervals.Remove(0); // remove root note
+        int perfectFifthIndex = intervals.IndexOf(7);
+        int dimIndex = intervals.IndexOf(6);
+        int augIndex = intervals.IndexOf(8);
+
+        if (perfectFifthIndex >= 0)
+        {
+            intervals.RemoveAt(perfectFifthIndex);
+
+            var name = "";
+
+            if (intervals.TryCheckAndRemove(2, out _)) name = "sus2";
+            else if (intervals.TryCheckAndRemove(3, out _)) name = "minor";
+            else if (intervals.TryCheckAndRemove(4, out _)) name = "major";
+            else if (intervals.TryCheckAndRemove(5, out _)) name = "sus4";
+
+            if (!string.IsNullOrEmpty(name)) return name;
+        }
+        else if (dimIndex >= 0)
+        {
+            intervals.RemoveAt(dimIndex);
+            if (intervals.TryCheckAndRemove(3, out _)) return "dim";
+        }
+        else if (augIndex >= 0)
+        {
+            intervals.RemoveAt(augIndex);
+            if (intervals.TryCheckAndRemove(4, out _)) return "aug";
+        }
+
+        return null;
+    }
+
+    private static void LogList<T>(List<T> list, string header)
+    {
+        string result = header;
+        foreach (var item in list) result += $"{item} ";
+        Debug.Log(result);
+    }
+
+    private static bool TryCheckAndRemove<T>(this List<T> list, T checkValue, out T removedValue)
+    {
+        removedValue = default;
+        int index = list.IndexOf(checkValue);
+        if (index >= 0)
+        {
+            removedValue = list[index];
+            list.RemoveAt(index);
+            return true;
+        }
+
+        return false;
     }
 }
