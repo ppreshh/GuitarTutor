@@ -17,7 +17,14 @@ public class InputFieldPanel : Panel
 
     protected override void Initialize()
     {
-        m_SubmitButton.onClick.AddListener(() => { m_OnSubmitButtonClicked?.Invoke(m_InputField.text); Hide(); });
+        m_SubmitButton.onClick.AddListener(() => 
+        {
+            if (string.IsNullOrEmpty(m_InputField.text)) return;
+
+            m_OnSubmitButtonClicked?.Invoke(m_InputField.text);
+            Hide();
+        });
+
         m_CancelButton.onClick.AddListener(() => { Hide(); });
 
         base.Initialize();
