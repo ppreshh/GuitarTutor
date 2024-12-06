@@ -13,7 +13,7 @@ public abstract class SlideInPanel : Panel
     protected abstract void SetupUIBeforeSlideIn();
 
     /// <summary>
-    /// Runs on Start() ... a little hacky, because this component needs to wait for Start() to its initial scaling based on the canvas's scaler on the parent.
+    /// Runs on Start() ... a little hacky, because this component needs to wait for Start() to do its initial scaling based on the canvas's scaler on the parent.
     /// </summary>
     protected virtual void AdditionalOnStart() { }
 
