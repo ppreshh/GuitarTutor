@@ -9,7 +9,7 @@ A tool for guitar learners that prefer to learn by ear and visuals.
 Short Walkthrough on YouTube:
 https://youtu.be/fZCShNffAM0
 
-*At the moment, audio for the guitar only works up to the 7th fret for each string (haven't spent the time to record all the notes in a good treated room yet)*
+*At the moment, audio for the guitar only works from an open string in standard tuning up to the 7th fret for each string (haven't spent the time to record all the notes in a good treated room yet)*
 
 ### Current Features
 
