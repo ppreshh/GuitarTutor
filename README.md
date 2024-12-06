@@ -14,6 +14,7 @@ Google Play Store Internal Testing Link: https://play.google.com/apps/internalte
 
 ### Future Features
 
+- Share progressions with friends
 - Better chord progression playback
 - Open a library of chords to show on the fingerboard
 - Show suggestions for variations of a chord that's currently set
