@@ -13,7 +13,6 @@ Google Play Store Internal Testing Link: https://play.google.com/apps/internalte
 - Save chords in order to make progressions
 - Name those saves, and be able to reload them
 - Playback chord progression's chords
-- Add a capo
 - Change tuning
 
 ### Future Features
