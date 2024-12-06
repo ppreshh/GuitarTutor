@@ -1,5 +1,7 @@
 # Guitar Tutor
 
+![guitar logs screenshots](https://github.com/user-attachments/assets/ca9584ed-7ee2-4595-bc89-efbf051b2268)
+
 Unity Mobile App
 
 A tool for guitar learners that prefer to learn by ear and visuals.
