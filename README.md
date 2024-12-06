@@ -8,6 +8,8 @@ A tool for guitar learners that prefer to learn by ear and visuals.
 
 Google Play Store Internal Testing Link: https://play.google.com/apps/internaltest/4700917208073063368
 
+*At the moment, audio for the guitar only works up to the 7th fret for each string (haven't spent the time to record all the notes in a good treated room yet)*
+
 ### Current Features
 
 - Identify chords by placing markers to denote where fingers and capo are placed (analyzer algorithm is a WIP)
