@@ -4,7 +4,7 @@
 
 Unity Mobile App
 
-A tool for guitar learners that prefer to learn by ear and visuals.
+A tool for guitar learners that prefer to learn by ear and visuals. Provides an easy way to save ideas to come back to them on your guitar.
 
 Short Walkthrough on YouTube:
 https://youtu.be/fZCShNffAM0
