@@ -49,8 +49,6 @@ public class ProgressionsListPanel : Panel
         {
             m_ProgressionsListItems[ProgressionsManager.Instance.CurrentSelectedProgressionIndex].SelectButton.SetIsOnWithoutNotify(true);
         }
-
-        Show(0f);
     }
 
     private void ProgressionListItem_OnDeleteButtonClicked(int index)

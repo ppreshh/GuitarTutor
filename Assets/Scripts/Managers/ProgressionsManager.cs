@@ -51,6 +51,7 @@ public class ProgressionsManager : MonoBehaviour
     }
 
     public event Action<int> OnCurrentSelectedProgressionIndexChanged;
+    public event Action OnProgressionNameUpdated;
     public event Action OnInitialized;
 
     public static ProgressionsManager Instance;
@@ -165,5 +166,16 @@ public class ProgressionsManager : MonoBehaviour
         }
 
         if (success) SaveProgressions();
+    }
+
+    public void UpdateProgressionName(Progression progression, string newName)
+    {
+        if (newName.Equals(progression.Name)) return;
+
+        progression.Name = newName;
+
+        SaveProgressions();
+
+        OnProgressionNameUpdated?.Invoke();
     }
 }

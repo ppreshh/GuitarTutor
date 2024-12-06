@@ -11,6 +11,7 @@ public class ProgressionViewPanel : Panel
     [SerializeField] private TextMeshProUGUI m_TuningText;
     [SerializeField] private TextMeshProUGUI m_CapoText;
     [SerializeField] private Button m_BackButton;
+    [SerializeField] private Button m_RenameButton;
     [SerializeField] private ProgressionViewItem m_ProgressionViewItemPrefab;
     [SerializeField] private Transform m_ProgressionViewItemsParent;
 
@@ -23,12 +24,28 @@ public class ProgressionViewPanel : Panel
     {
         m_BackButton.onClick.AddListener(() => OnBackButtonClicked?.Invoke());
 
+        m_RenameButton.onClick.AddListener(() =>
+        {
+            UIManager.Instance.GetUserInput("Rename this progression:", "Rename", true, (string newName) =>
+            {
+                ProgressionsManager.Instance.UpdateProgressionName(m_Progression, newName);
+            });
+        });
+
         base.Initialize();
+    }
+
+    private void Start()
+    {
+        ProgressionsManager.Instance.OnProgressionNameUpdated += ProgressionsManager_OnProgressionNameUpdated;
     }
 
     protected override void CleanUp()
     {
         m_BackButton.onClick.RemoveAllListeners();
+        m_RenameButton.onClick.RemoveAllListeners();
+
+        ProgressionsManager.Instance.OnProgressionNameUpdated -= ProgressionsManager_OnProgressionNameUpdated;
 
         base.CleanUp();
     }
@@ -83,5 +100,10 @@ public class ProgressionViewPanel : Panel
     {
         ClearItems();
         SetupItems();
+    }
+
+    private void ProgressionsManager_OnProgressionNameUpdated()
+    {
+        m_NameText.text = m_Progression.Name;
     }
 }

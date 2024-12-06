@@ -25,6 +25,11 @@ public class ProgressionsPanel : SlideInPanel
         base.Initialize();
     }
 
+    private void Start()
+    {
+        ProgressionsManager.Instance.OnProgressionNameUpdated += ProgressionsManager_OnProgressionNameUpdated;
+    }
+
     protected override void CleanUp()
     {
         m_ProgressionsListPanel.OnProgressionItemEditButtonClicked -= ProgressionsListPanel_OnProgressionItemEditButtonClicked;
@@ -33,13 +38,17 @@ public class ProgressionsPanel : SlideInPanel
 
         m_ProgressionViewPanel.OnBackButtonClicked -= ProgressionViewPanel_OnBackButtonClicked;
 
+        ProgressionsManager.Instance.OnProgressionNameUpdated -= ProgressionsManager_OnProgressionNameUpdated;
+
         base.CleanUp();
     }
 
     protected override void SetupUIBeforeSlideIn()
     {
         m_ProgressionViewPanel.Hide(0f);
+
         m_ProgressionsListPanel.RefreshUI();
+        m_ProgressionsListPanel.Show(0f);
     }
 
     private void ProgressionsListPanel_OnProgressionItemEditButtonClicked(int index)
@@ -52,5 +61,10 @@ public class ProgressionsPanel : SlideInPanel
     {
         m_ProgressionViewPanel.Hide(0f);
         m_ProgressionsListPanel.Show(0.1f);
+    }
+
+    private void ProgressionsManager_OnProgressionNameUpdated()
+    {
+        m_ProgressionsListPanel.RefreshUI();
     }
 }
