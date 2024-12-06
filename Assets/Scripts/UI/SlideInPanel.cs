@@ -12,6 +12,11 @@ public abstract class SlideInPanel : Panel
 
     protected abstract void SetupUIBeforeSlideIn();
 
+    /// <summary>
+    /// Runs on Start() ... a little hacky, because this component needs to wait for Start() to its initial scaling based on the canvas's scaler on the parent.
+    /// </summary>
+    protected virtual void AdditionalOnStart() { }
+
     private enum Side
     {
         Left,
@@ -32,6 +37,8 @@ public abstract class SlideInPanel : Panel
 
     private void Start()
     {
+        AdditionalOnStart();
+
         var canvas = m_RectTransform.GetComponentInParent<Canvas>();
         if (canvas == null)
         {

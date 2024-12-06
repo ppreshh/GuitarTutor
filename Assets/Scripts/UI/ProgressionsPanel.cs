@@ -25,7 +25,7 @@ public class ProgressionsPanel : SlideInPanel
         base.Initialize();
     }
 
-    private void Start()
+    protected override void AdditionalOnStart()
     {
         ProgressionsManager.Instance.OnProgressionNameUpdated += ProgressionsManager_OnProgressionNameUpdated;
     }
