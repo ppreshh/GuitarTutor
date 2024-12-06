@@ -4,15 +4,6 @@ using UnityEngine;
 
 public static class ChordFinder
 {
-    private static readonly Dictionary<List<int>, string> Triads = new()
-    {
-        { new(){ 0, 2, 7 }, "sus2" },
-        { new(){ 0, 3, 7 }, "minor" },
-        { new(){ 0, 4, 7 }, "major" },
-        { new(){ 0, 5, 7 }, "sus4" },
-        { new(){ 0, 4, 8 }, "aug" },
-    };
-
     public static string GetChordName(List<NoteWithOctave?> notes)
     {
         // Add all played strings to list
@@ -51,9 +42,11 @@ public static class ChordFinder
         LogList(chordNotes, "All Notes: ");
         LogList(intervalNotes, "Remove Duplicates: ");
         LogList(intervals, "Calculated Intervals: ");
-        Debug.Log(" --------------------- ");
 
         var name = IntervalsToName(intervals);
+
+        Debug.Log(" --------------------- ");
+
         if (name != null)
         {
             return $"{rootNote.Note}{name}";
@@ -86,6 +79,29 @@ public static class ChordFinder
             return CalcTriad(intervals);
         }
 
+        if (intervals.Count == 4)
+        {
+            var name = CalcTriad(intervals);
+            LogList(intervals, $"{name}, Remaining intervals for 4 note chord: ");
+
+            if (name != null)
+            {
+                if (name.Equals("minor"))
+                {
+                    if (intervals.TryCheckAndRemove(10, out _)) return name + "7";
+                }
+
+                if (name.Equals("major"))
+                {
+                    if (intervals.TryCheckAndRemove(11, out _)) return name + "7";
+                }
+
+                if (intervals.TryCheckAndRemove(2, out _)) return name + " add9";
+            }
+
+            return null;
+        }
+
         return null;
     }
 
@@ -101,10 +117,10 @@ public static class ChordFinder
             intervals.RemoveAt(perfectFifthIndex);
 
             var name = "";
-
-            if (intervals.TryCheckAndRemove(2, out _)) name = "sus2";
-            else if (intervals.TryCheckAndRemove(3, out _)) name = "minor";
+            
+            if (intervals.TryCheckAndRemove(3, out _)) name = "minor";
             else if (intervals.TryCheckAndRemove(4, out _)) name = "major";
+            else if (intervals.TryCheckAndRemove(2, out _)) name = "sus2";
             else if (intervals.TryCheckAndRemove(5, out _)) name = "sus4";
 
             if (!string.IsNullOrEmpty(name)) return name;
