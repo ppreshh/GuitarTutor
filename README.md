@@ -6,6 +6,10 @@ Unity Mobile App
 
 A tool for guitar learners that prefer to learn by ear and visuals. Provides an easy way to save ideas to come back to them on your guitar.
 
+Google Play Store Closed Testing Join Link:
+Mobile Link: https://play.google.com/store/apps/details?id=com.presh.GuitarLogs
+Desktop Web Link: https://play.google.com/apps/testing/com.presh.GuitarLogs
+
 Short Walkthrough on YouTube:
 https://youtu.be/fZCShNffAM0
 
