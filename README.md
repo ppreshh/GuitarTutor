@@ -1,4 +1,4 @@
-# Guitar Logs (previously known as Guitar Tutor)
+# Guitar Memos (previously known as Guitar Tutor)
 
 ![guitar logs screenshots](https://github.com/user-attachments/assets/ca9584ed-7ee2-4595-bc89-efbf051b2268)
 
