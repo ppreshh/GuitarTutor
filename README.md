@@ -4,11 +4,13 @@
 
 *Unity Mobile App*
 
+Latest Build Version: v0.9
+
 A tool for guitar learners that prefer to learn by ear and visuals. Provides an easy way to save ideas to come back to them on your guitar.
 
 ------------------------
 
-#### Short Walkthrough on YouTube:
+#### Short Walkthrough on YouTube of v0.8:
 
 https://youtu.be/fZCShNffAM0
 
