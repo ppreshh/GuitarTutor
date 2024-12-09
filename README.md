@@ -1,6 +1,6 @@
 # Guitar Memos (previously known as Guitar Tutor)
 
-![guitar logs screenshots](https://github.com/user-attachments/assets/ca9584ed-7ee2-4595-bc89-efbf051b2268)
+![guitar logs screenshots](https://github.com/user-attachments/assets/559f5fba-63e6-4568-b631-ce90364168b5)
 
 *Unity Mobile App*
 
