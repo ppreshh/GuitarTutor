@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public static class MyExtensions
 {
@@ -36,5 +37,10 @@ public static class MyExtensions
         }
 
         return differingElements;
+    }
+
+    public static void SetAlpha(this Image image, float alpha)
+    {
+        image.color = new(image.color.r, image.color.g, image.color.b, alpha);
     }
 }

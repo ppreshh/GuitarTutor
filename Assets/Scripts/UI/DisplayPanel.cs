@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DisplayPanel : MonoBehaviour
 {
-    [SerializeField] private List<TextMeshProUGUI> m_NoteTexts;
+    [SerializeField] private List<NoteButton> m_NoteButtons;
     [SerializeField] private TextMeshProUGUI m_ChordNameText;
     [SerializeField] private Button m_StrumButton;
     [SerializeField] private Button m_ResetButton;
@@ -84,7 +84,7 @@ public class DisplayPanel : MonoBehaviour
         {
             var note = GuitarManager.Instance.GetCurrentNoteForString(i + 1);
 
-            m_NoteTexts[i].text = note == null ? " - " : note.ToString();
+            m_NoteButtons[i].SetNote(note);
         }
 
         m_ChordNameText.text = ChordFinder.GetChordName(GuitarManager.Instance.GetAllCurrentNotes());
