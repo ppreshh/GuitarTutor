@@ -35,13 +35,13 @@ public class NoteButton : MonoBehaviour
         {
             m_Note = note.Value;
             m_Text.text = note.Value.ToString();
-            m_BorderImage.SetAlpha(0.8f);
+            m_BorderImage.SetAlpha(0.08f);
         }
         else
         {
             m_Note = null;
             m_Text.text = "-";
-            m_BorderImage.SetAlpha(0.2f);
+            m_BorderImage.SetAlpha(0.02f);
         }
     }
 }
