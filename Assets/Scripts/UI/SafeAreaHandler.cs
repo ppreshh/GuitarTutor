@@ -8,6 +8,7 @@ public class SafeAreaHandler : MonoBehaviour
     [SerializeField] private RectTransform m_MainPanelScrollViewContent;
     [SerializeField] private RectTransform m_ProgressionsPanelContainer;
     [SerializeField] private RectTransform m_SettingsPanelContainer;
+    [SerializeField] private RectTransform m_NotificationPanel;
 
     private const float k_TopPadding = 25f;
 
@@ -30,6 +31,7 @@ public class SafeAreaHandler : MonoBehaviour
 
             AdjustRectTransformTop(m_SettingsPanelContainer, verticalAdjustment);
             AdjustRectTransformTop(m_ProgressionsPanelContainer, verticalAdjustment);
+            AdjustRectTransformTop(m_NotificationPanel, verticalAdjustment);
         }
     }
 

@@ -10212,6 +10212,7 @@ MonoBehaviour:
   m_MainPanelScrollViewContent: {fileID: 30499241427721578}
   m_ProgressionsPanelContainer: {fileID: 3346006607613984437}
   m_SettingsPanelContainer: {fileID: 5860119817621485984}
+  m_NotificationPanel: {fileID: 4163927038063492785}
 --- !u!1 &5647272598648824636
 GameObject:
   m_ObjectHideFlags: 0
