@@ -1,12 +1,14 @@
 # Guitar Memos (previously known as Guitar Tutor)
 
+A tool for guitar learners that prefer to learn by ear and visuals. Provides an easy way to save ideas to come back to them on your guitar.
+
 ![guitar logs screenshots](https://github.com/user-attachments/assets/559f5fba-63e6-4568-b631-ce90364168b5)
 
 *Unity Mobile App*
 
-Latest Build Version: v0.9
+Latest Build Version: v0.10
 
-A tool for guitar learners that prefer to learn by ear and visuals. Provides an easy way to save ideas to come back to them on your guitar.
+Join Closed Alpha Testing on Play Store here: https://play.google.com/apps/testing/com.presh.GuitarLogs
 
 ------------------------
 
