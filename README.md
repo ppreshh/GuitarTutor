@@ -8,8 +8,6 @@ A tool for guitar learners that prefer to learn by ear and visuals. Provides an 
 
 Latest Build Version: v0.10
 
-Join Closed Alpha Testing on Play Store here: https://play.google.com/apps/testing/com.presh.GuitarLogs
-
 ------------------------
 
 #### Short Walkthrough on YouTube of v0.8:
