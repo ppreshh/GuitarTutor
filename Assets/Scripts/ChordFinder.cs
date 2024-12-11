@@ -39,9 +39,9 @@ public static class ChordFinder
             intervals.Add(interval);
         }
 
-        LogList(chordNotes, "All Notes: ");
-        LogList(intervalNotes, "Remove Duplicates: ");
-        LogList(intervals, "Calculated Intervals: ");
+        //LogList(chordNotes, "All Notes: ");
+        //LogList(intervalNotes, "Remove Duplicates: ");
+        //LogList(intervals, "Calculated Intervals: ");
 
         var name = IntervalsToName(intervals);
 
@@ -90,7 +90,7 @@ public static class ChordFinder
     private static string CalcQuadAndMore(List<int> intervals)
     {
         var name = CalcTriad(intervals);
-        LogList(intervals, $"{name}, Remaining intervals for 4 note chord: ");
+        //LogList(intervals, $"{name}, Remaining intervals for 4 note chord: ");
 
         if (name != null)
         {
