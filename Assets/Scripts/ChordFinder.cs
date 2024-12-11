@@ -94,19 +94,10 @@ public static class ChordFinder
 
         if (name != null)
         {
-            if (name.Equals("minor"))
-            {
-                if (intervals.TryCheckAndRemove(10)) name += "7";
-            }
-
-            if (name.Equals("major"))
-            {
-                if (intervals.TryCheckAndRemove(11)) name += "7";
-            }
-
             if (intervals.TryCheckAndRemove(8)) name += " addb6";
-            if (intervals.TryCheckAndRemove(9)) name += " add6";
-            if (intervals.TryCheckAndRemove(10)) name += " add7";
+            if (intervals.TryCheckAndRemove(9)) name += " 6";
+            if (intervals.TryCheckAndRemove(10)) name += " 7";
+            if (intervals.TryCheckAndRemove(11)) name += " maj7";
             if (intervals.TryCheckAndRemove(1)) name += " addb9";
             if (intervals.TryCheckAndRemove(2)) name += " add9";
             if (intervals.TryCheckAndRemove(4)) name += " add#9";
@@ -129,21 +120,22 @@ public static class ChordFinder
 
             if (found != -1)
             {
-                if (found == 2) name = "sus2";
-                if (found == 3) name = "minor";
-                if (found == 4) name = "major";
-                if (found == 5) name = "sus4";
+                if (found == 2) name = " sus2";
+                if (found == 3) name = "m";
+                if (found == 4) name = "";
+                if (found == 5) name = " sus4";
             }
 
-            if (!string.IsNullOrEmpty(name)) return name;
+            if (string.IsNullOrEmpty(name) && found != 4) return null;
+            else return name;
         }
         else if (intervals.TryCheckAndRemove(6))
         {
-            if (intervals.TryCheckAndRemove(3)) return "dim";
+            if (intervals.TryCheckAndRemove(3)) return " dim";
         }
         else if (intervals.TryCheckAndRemove(8))
         {
-            if (intervals.TryCheckAndRemove(4)) return "aug";
+            if (intervals.TryCheckAndRemove(4)) return " aug";
         }
 
         return null;
