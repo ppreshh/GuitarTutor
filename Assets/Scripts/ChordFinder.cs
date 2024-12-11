@@ -94,28 +94,54 @@ public static class ChordFinder
 
         if (name != null)
         {
+            bool isMajor = name.Equals("");
+            bool isMinor = name.Equals("m");
+            
+            if (intervals.Contains(9) && !intervals.Contains(10) && !intervals.Contains(11))
+            {
+                intervals.Remove(9);
+                if (isMinor) name += "6";
+                else name = "6" + name;
+            }
+            if (intervals.TryCheckAndRemove(10))
+            {
+                if (isMinor) name += "7";
+                else name = "7" + name;
+            }
+            if (intervals.TryCheckAndRemove(11))
+            {
+                if (name[0] == '6' || name[0] == '7')
+                {
+                    name.Insert(1, " maj7");
+                }
+                else if (name.Contains("sus2") || name.Contains("sus4"))
+                {
+                    name = " maj7" + name;
+                }
+                else
+                {
+                    name += " maj7";
+                }
+            }
+            if (intervals.TryCheckAndRemove(2)) name += " add9";
+            if (intervals.TryCheckAndRemove(5)) name += " add11";
+            if (intervals.TryCheckAndRemove(9)) name += " add13";
             if (intervals.Contains(8) && !intervals.Contains(10) && !intervals.Contains(11))
             {
                 intervals.Remove(8);
                 name += " addb6";
             }
-            if (intervals.Contains(9) && !intervals.Contains(10) && !intervals.Contains(11))
-            {
-                intervals.Remove(9);
-                if (name.Equals("") || name.Equals("m")) name += "6";
-                else name = "6" + name;
-            }
-            if (intervals.TryCheckAndRemove(10))
-            {
-                if (name.Equals("") || name.Equals("m")) name += "7";
-                else name = "7" + name;
-            }
-            if (intervals.TryCheckAndRemove(11)) name += " maj7";
-            if (intervals.TryCheckAndRemove(2)) name += " add9";
-            if (intervals.TryCheckAndRemove(5)) name += " add11";
-            if (intervals.TryCheckAndRemove(9)) name += " add13";
             if (intervals.TryCheckAndRemove(1)) name += " addb9";
-            if (intervals.TryCheckAndRemove(3)) name += " add#9";
+            if (intervals.Contains(3) && isMajor)
+            {
+                intervals.Remove(3);
+                name += " add#9";
+            }
+            else if (intervals.Contains(4) && isMinor)
+            {
+                intervals.Remove(4);
+                name += " add#9";
+            }
             if (intervals.TryCheckAndRemove(6)) name += " add#11";
             if (intervals.TryCheckAndRemove(8)) name += " addb13";
             
