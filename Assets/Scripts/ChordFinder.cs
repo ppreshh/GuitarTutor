@@ -79,61 +79,67 @@ public static class ChordFinder
             return CalcTriad(intervals);
         }
 
-        if (intervals.Count == 4)
+        if (intervals.Count >= 4)
         {
-            var name = CalcTriad(intervals);
-            LogList(intervals, $"{name}, Remaining intervals for 4 note chord: ");
-
-            if (name != null)
-            {
-                if (name.Equals("minor"))
-                {
-                    if (intervals.TryCheckAndRemove(10, out _)) return name + "7";
-                }
-
-                if (name.Equals("major"))
-                {
-                    if (intervals.TryCheckAndRemove(11, out _)) return name + "7";
-                }
-
-                if (intervals.TryCheckAndRemove(2, out _)) return name + " add9";
-            }
-
-            return null;
+            return CalcQuadAndMore(intervals);
         }
 
         return null;
     }
 
+    private static string CalcQuadAndMore(List<int> intervals)
+    {
+        var name = CalcTriad(intervals);
+        LogList(intervals, $"{name}, Remaining intervals for 4 note chord: ");
+
+        if (name != null)
+        {
+            if (name.Equals("minor"))
+            {
+                if (intervals.TryCheckAndRemove(10)) name += "7";
+            }
+
+            if (name.Equals("major"))
+            {
+                if (intervals.TryCheckAndRemove(11)) name += "7";
+            }
+
+            if (intervals.TryCheckAndRemove(9)) name += " add6";
+            if (intervals.TryCheckAndRemove(10)) name += " add7";
+            if (intervals.TryCheckAndRemove(2)) name += " add9";
+            if (intervals.TryCheckAndRemove(5)) name += " add11";
+        }
+
+        return name;
+    }
+
     private static string CalcTriad(List<int> intervals)
     {
         intervals.Remove(0); // remove root note
-        int perfectFifthIndex = intervals.IndexOf(7);
-        int dimIndex = intervals.IndexOf(6);
-        int augIndex = intervals.IndexOf(8);
 
-        if (perfectFifthIndex >= 0)
+        if (intervals.TryCheckAndRemove(7))
         {
-            intervals.RemoveAt(perfectFifthIndex);
-
             var name = "";
             
-            if (intervals.TryCheckAndRemove(3, out _)) name = "minor";
-            else if (intervals.TryCheckAndRemove(4, out _)) name = "major";
-            else if (intervals.TryCheckAndRemove(2, out _)) name = "sus2";
-            else if (intervals.TryCheckAndRemove(5, out _)) name = "sus4";
+            int found = FindAndRemoveTriadInterval(intervals);
+
+            if (found != -1)
+            {
+                if (found == 2) name = "sus2";
+                if (found == 3) name = "minor";
+                if (found == 4) name = "major";
+                if (found == 5) name = "sus4";
+            }
 
             if (!string.IsNullOrEmpty(name)) return name;
         }
-        else if (dimIndex >= 0)
+        else if (intervals.TryCheckAndRemove(6))
         {
-            intervals.RemoveAt(dimIndex);
-            if (intervals.TryCheckAndRemove(3, out _)) return "dim";
+            if (intervals.TryCheckAndRemove(3)) return "dim";
         }
-        else if (augIndex >= 0)
+        else if (intervals.TryCheckAndRemove(8))
         {
-            intervals.RemoveAt(augIndex);
-            if (intervals.TryCheckAndRemove(4, out _)) return "aug";
+            if (intervals.TryCheckAndRemove(4)) return "aug";
         }
 
         return null;
@@ -146,17 +152,35 @@ public static class ChordFinder
         Debug.Log(result);
     }
 
-    private static bool TryCheckAndRemove<T>(this List<T> list, T checkValue, out T removedValue)
+    private static int FindAndRemoveTriadInterval(List<int> intervals)
     {
-        removedValue = default;
-        int index = list.IndexOf(checkValue);
-        if (index >= 0)
+        List<int> majorMinor = new() { 3, 4 };
+        List<int> sus2sus4 = new() { 2, 5 };
+
+        for (int i = 0; i < intervals.Count; i++)
         {
-            removedValue = list[index];
-            list.RemoveAt(index);
-            return true;
+            if (majorMinor.Contains(intervals[i]))
+            {
+                int index = majorMinor.IndexOf(intervals[i]);
+
+                intervals.RemoveAt(i);
+
+                return majorMinor[index];
+            }
         }
 
-        return false;
+        for (int i = 0; i < intervals.Count; i++)
+        {
+            if (sus2sus4.Contains(intervals[i]))
+            {
+                int index = sus2sus4.IndexOf(intervals[i]);
+
+                intervals.RemoveAt(i);
+
+                return sus2sus4[index];
+            }
+        }
+
+        return -1;
     }
 }

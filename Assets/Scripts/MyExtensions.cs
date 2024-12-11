@@ -43,4 +43,16 @@ public static class MyExtensions
     {
         image.color = new(image.color.r, image.color.g, image.color.b, alpha);
     }
+
+    public static bool TryCheckAndRemove<T>(this List<T> list, T checkValue)
+    {
+        int index = list.IndexOf(checkValue);
+        if (index >= 0)
+        {
+            list.RemoveAt(index);
+            return true;
+        }
+
+        return false;
+    }
 }
