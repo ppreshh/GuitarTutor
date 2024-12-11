@@ -10,7 +10,7 @@ Latest Build Version: v0.14
 
 ------------------------
 
-#### Use via web client (ideally mobile web client):
+#### Use via web client (ideally mobile web client; still has some bugs that the mobile app does not):
 
 https://preshgames.itch.io/guitar-memos
 
