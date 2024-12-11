@@ -49,7 +49,7 @@ public static class ChordFinder
 
         if (name != null)
         {
-            return $"{rootNote.Note}{name}";
+            return $"<b>{rootNote.Note}</b>{name}";
         }
         else
         {
@@ -94,15 +94,31 @@ public static class ChordFinder
 
         if (name != null)
         {
-            if (intervals.TryCheckAndRemove(8)) name += " addb6";
-            if (intervals.TryCheckAndRemove(9)) name += " 6";
-            if (intervals.TryCheckAndRemove(10)) name += " 7";
+            if (intervals.Contains(8) && !intervals.Contains(10) && !intervals.Contains(11))
+            {
+                intervals.Remove(8);
+                name += " addb6";
+            }
+            if (intervals.Contains(9) && !intervals.Contains(10) && !intervals.Contains(11))
+            {
+                intervals.Remove(9);
+                if (name.Equals("") || name.Equals("m")) name += "6";
+                else name = "6" + name;
+            }
+            if (intervals.TryCheckAndRemove(10))
+            {
+                if (name.Equals("") || name.Equals("m")) name += "7";
+                else name = "7" + name;
+            }
             if (intervals.TryCheckAndRemove(11)) name += " maj7";
-            if (intervals.TryCheckAndRemove(1)) name += " addb9";
             if (intervals.TryCheckAndRemove(2)) name += " add9";
-            if (intervals.TryCheckAndRemove(4)) name += " add#9";
             if (intervals.TryCheckAndRemove(5)) name += " add11";
+            if (intervals.TryCheckAndRemove(9)) name += " add13";
+            if (intervals.TryCheckAndRemove(1)) name += " addb9";
+            if (intervals.TryCheckAndRemove(3)) name += " add#9";
             if (intervals.TryCheckAndRemove(6)) name += " add#11";
+            if (intervals.TryCheckAndRemove(8)) name += " addb13";
+            
         }
 
         return name;
