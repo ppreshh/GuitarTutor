@@ -110,35 +110,34 @@ public static class ChordFinder
 
     private static string CalcTriad(List<int> intervals)
     {
+        var name = "";
+
         intervals.Remove(0); // remove root note
 
-        if (intervals.TryCheckAndRemove(7))
-        {
-            var name = "";
-            
-            int found = FindAndRemoveTriadInterval(intervals);
+        int found = FindAndRemoveTriadInterval(intervals);
 
-            if (found != -1)
-            {
-                if (found == 2) name = " sus2";
-                if (found == 3) name = "m";
-                if (found == 4) name = "";
-                if (found == 5) name = " sus4";
-            }
+        if (!intervals.Contains(7) && intervals.Contains(6) && found == 3)
+        {
+            intervals.Remove(6);
+            return " dim";
+        }
+        else if (!intervals.Contains(7) && intervals.Contains(8) && found == 4)
+        {
+            intervals.Remove(8);
+            return " aug";
+        }
+        else
+        {
+            intervals.TryCheckAndRemove(7);
 
-            if (string.IsNullOrEmpty(name) && found != 4) return null;
-            else return name;
-        }
-        else if (intervals.TryCheckAndRemove(6))
-        {
-            if (intervals.TryCheckAndRemove(3)) return " dim";
-        }
-        else if (intervals.TryCheckAndRemove(8))
-        {
-            if (intervals.TryCheckAndRemove(4)) return " aug";
+            if (found == 2) name = " sus2";
+            if (found == 3) name = "m";
+            if (found == 4) name = "";
+            if (found == 5) name = " sus4";
         }
 
-        return null;
+        if (string.IsNullOrEmpty(name) && found != 4) return null;
+        else return name;
     }
 
     private static void LogList<T>(List<T> list, string header)
