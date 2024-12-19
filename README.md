@@ -10,13 +10,9 @@ Latest Build Version: v0.14
 
 ------------------------
 
-#### Use via web client (ideally mobile web client; still has some bugs that the mobile app does not):
+#### Short Walkthrough on YouTube of v0.14:
 
-https://preshgames.itch.io/guitar-memos
-
-#### Short Walkthrough on YouTube of v0.8:
-
-https://youtu.be/fZCShNffAM0
+https://youtu.be/MHhACd5R1gI
 
 ------------------------
 
