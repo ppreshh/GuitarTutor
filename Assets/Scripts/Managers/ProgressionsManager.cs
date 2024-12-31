@@ -101,6 +101,13 @@ public class ProgressionsManager : MonoBehaviour
         SaveProgressions();
     }
 
+    public void AddProgression(Progression progression)
+    {
+        m_Progressions.Add(progression);
+
+        SaveProgressions();
+    }
+
     public void CreateProgression(string name)
     {
         m_Progressions.Add(new(name, GuitarManager.Instance.Tuning, GuitarManager.Instance.CapoPosition));

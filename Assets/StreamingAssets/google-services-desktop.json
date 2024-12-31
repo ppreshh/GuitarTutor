@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "692794375376",
+    "firebase_url": "https://guitarmemos-default-rtdb.firebaseio.com",
+    "project_id": "guitarmemos",
+    "storage_bucket": "guitarmemos.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:692794375376:android:2741f6b9917a48002672d5",
+        "android_client_info": {
+          "package_name": "com.presh.GuitarLogs"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOtqfsy8yrAgzcLBogQFIQsv-20kVsr0Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -40,6 +40,7 @@ public class ProgressionsListPanel : Panel
 
             item.OnSelectedButtonClicked += ProgressionsListItem_OnSelectButtonClicked;
             item.OnEditButtonClicked += ProgressionsListItem_OnEditButtonClicked;
+            item.OnShareButtonClicked += ProgressionsListItem_OnShareButtonClicked;
             item.OnDeleteButtonClicked += ProgressionListItem_OnDeleteButtonClicked;
 
             m_ProgressionsListItems.Add(item);
@@ -65,6 +66,11 @@ public class ProgressionsListPanel : Panel
         OnProgressionItemEditButtonClicked?.Invoke(index);
     }
 
+    private void ProgressionsListItem_OnShareButtonClicked(int index)
+    {
+        FirebaseManager.Instance.SaveProgression(ProgressionsManager.Instance.Progressions[index]);
+    }
+
     private void ProgressionsListItem_OnSelectButtonClicked(object sender, ProgressionsListItem.SelectButtonClickedEventArgs e)
     {
         ProgressionsManager.Instance.CurrentSelectedProgressionIndex = e.IsSelecting ? e.Index : -1;
@@ -76,6 +82,7 @@ public class ProgressionsListPanel : Panel
         {
             item.OnSelectedButtonClicked -= ProgressionsListItem_OnSelectButtonClicked;
             item.OnEditButtonClicked -= ProgressionsListItem_OnEditButtonClicked;
+            item.OnShareButtonClicked -= ProgressionsListItem_OnShareButtonClicked;
             item.OnDeleteButtonClicked -= ProgressionListItem_OnDeleteButtonClicked;
 
             Destroy(item.gameObject);
