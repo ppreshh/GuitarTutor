@@ -3,7 +3,6 @@ using Firebase.Auth;
 using Firebase.Database;
 using Firebase.Extensions;
 using Newtonsoft.Json;
-using System;
 using UnityEngine;
 
 public class FirebaseManager : MonoBehaviour

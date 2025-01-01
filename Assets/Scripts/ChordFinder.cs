@@ -190,11 +190,12 @@ public static class ChordFinder
 
     private static void LogList<T>(List<T> list, string header)
     {
-        if (!k_ShouldLog) return;
-
-        string result = header;
-        foreach (var item in list) result += $"{item} ";
-        Debug.Log(result);
+        if (k_ShouldLog)
+        {
+            string result = header;
+            foreach (var item in list) result += $"{item} ";
+            Debug.Log(result);
+        }
     }
 
     private static int FindAndRemoveTriadInterval(List<int> intervals)
