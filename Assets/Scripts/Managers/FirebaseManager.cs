@@ -1,4 +1,5 @@
 using Firebase;
+using Firebase.Auth;
 using Firebase.Database;
 using Firebase.Extensions;
 using Newtonsoft.Json;
@@ -9,9 +10,10 @@ public class FirebaseManager : MonoBehaviour
 {
     public static FirebaseManager Instance { get; private set; }
 
-    private bool m_IsFirebaseReady = false;
+    private bool m_IsInitialized = false;
     private FirebaseApp m_App = null;
     private DatabaseReference m_Database = null;
+    private FirebaseAuth m_Auth = null;
 
     private void Awake()
     {
@@ -28,10 +30,27 @@ public class FirebaseManager : MonoBehaviour
                 // where app is a Firebase.FirebaseApp property of your application class.
                 m_App = FirebaseApp.DefaultInstance;
                 m_Database = FirebaseDatabase.DefaultInstance.RootReference;
+                m_Auth = FirebaseAuth.DefaultInstance;
 
-                // Set a flag here to indicate whether Firebase is ready to use by your app.
-                m_IsFirebaseReady = true;
+                // Sign in anonymously
+                m_Auth.SignInAnonymouslyAsync().ContinueWith(task => {
+                    if (task.IsCanceled)
+                    {
+                        Debug.LogError("SignInAnonymouslyAsync was canceled.");
+                        return;
+                    }
+                    if (task.IsFaulted)
+                    {
+                        Debug.LogError("SignInAnonymouslyAsync encountered an error: " + task.Exception);
+                        return;
+                    }
 
+                    AuthResult result = task.Result;
+                    Debug.LogFormat("User signed in successfully: {0} ({1})",
+                        result.User.DisplayName, result.User.UserId);
+                });
+
+                m_IsInitialized = true;
                 Debug.Log("Firebase Initialized");
             }
             else

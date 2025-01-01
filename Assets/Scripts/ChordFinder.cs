@@ -4,6 +4,8 @@ using UnityEngine;
 
 public static class ChordFinder
 {
+    private const bool k_ShouldLog = true;
+
     public static string GetChordName(List<NoteWithOctave?> notes)
     {
         // Add all played strings to list
@@ -45,7 +47,7 @@ public static class ChordFinder
 
         var name = IntervalsToName(intervals);
 
-        Debug.Log(" --------------------- ");
+        if (k_ShouldLog) Debug.Log(" --------------------- ");
 
         if (name != null)
         {
@@ -110,6 +112,10 @@ public static class ChordFinder
             }
             if (intervals.TryCheckAndRemove(11))
             {
+                if (name.Length == 0)
+                {
+                    name += " maj7";
+                }
                 if (name[0] == '6' || name[0] == '7')
                 {
                     name.Insert(1, " maj7");
@@ -118,7 +124,7 @@ public static class ChordFinder
                 {
                     name = " maj7" + name;
                 }
-                else
+                else if (!name.Contains("maj7"))
                 {
                     name += " maj7";
                 }
@@ -184,6 +190,8 @@ public static class ChordFinder
 
     private static void LogList<T>(List<T> list, string header)
     {
+        if (!k_ShouldLog) return;
+
         string result = header;
         foreach (var item in list) result += $"{item} ";
         Debug.Log(result);
