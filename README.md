@@ -28,10 +28,10 @@ https://youtu.be/MHhACd5R1gI
 - Name those saves, and be able to reload them
 - Playback chord progression's chords
 - Change tuning
+- Share progressions with friends
 
 ### Future Features
 
-- Share progressions with friends
 - Better chord progression playback
 - Open a library of chords to show on the fingerboard
 - Show suggestions for variations of a chord that's currently set
