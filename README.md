@@ -6,7 +6,7 @@ A tool for guitar learners that prefer to learn by ear and visuals. Provides an 
 
 *Unity Mobile App*
 
-Latest Build Version: v0.15
+Latest Build Version: v0.16
 
 ------------------------
 
