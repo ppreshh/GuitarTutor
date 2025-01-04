@@ -5,18 +5,39 @@ public class AppLinkHandler : MonoBehaviour
 {
     void Start()
     {
-        // Capture the URL when the app is launched
-        string url = Application.absoluteURL;
-        if (!string.IsNullOrEmpty(url) && url.Contains("guitar-memos://share"))
+#if UNITY_ANDROID
+        HandleAndroidIntent();
+#endif
+    }
+
+#if UNITY_ANDROID
+    void HandleAndroidIntent()
+    {
+        using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayerActivity"))
         {
-            string progressionId = ExtractProgressionId(url);
-            FirebaseManager.Instance.LoadProgression(progressionId);
+            AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+            AndroidJavaObject intent = currentActivity.Call<AndroidJavaObject>("getIntent");
+
+            string action = intent.Call<string>("getAction");
+            if (action == "android.intent.action.VIEW")
+            {
+                string url = intent.Call<string>("getDataString");
+
+                if (!string.IsNullOrEmpty(url))
+                {
+                    if (url.Contains("guitar-memos://share"))
+                    {
+                        string progressionId = ExtractProgressionId(url);
+                        FirebaseManager.Instance.LoadProgression(progressionId);
+                    }
+                }
+            }
         }
     }
+#endif
 
     string ExtractProgressionId(string url)
     {
-        // Example: your-app://share?Id=<unique_id>
         Uri uri = new Uri(url);
         var queryParams = System.Web.HttpUtility.ParseQueryString(uri.Query);
         return queryParams["Id"];

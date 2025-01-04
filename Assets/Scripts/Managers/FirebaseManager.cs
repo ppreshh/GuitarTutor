@@ -10,6 +10,8 @@ public class FirebaseManager : MonoBehaviour
     public static FirebaseManager Instance { get; private set; }
 
     private bool m_IsInitialized = false;
+    public bool IsInitialized { get => m_IsInitialized; }
+
     private FirebaseApp m_App = null;
     private DatabaseReference m_Database = null;
     private FirebaseAuth m_Auth = null;
