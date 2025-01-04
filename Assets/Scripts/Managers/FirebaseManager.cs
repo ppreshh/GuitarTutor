@@ -107,6 +107,8 @@ public class FirebaseManager : MonoBehaviour
 
     public void LoadProgression(string id)
     {
+        Debug.Log("Attempting to load progression with id: " + id);
+
         m_Database.Child("progressions").Child(id).GetValueAsync().ContinueWithOnMainThread(task =>
         {
             if (task.IsCompleted && !task.IsFaulted)
